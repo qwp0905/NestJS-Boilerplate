@@ -28,13 +28,10 @@ export class RoleGuard implements CanActivate {
     @Headers() headers: Record<string, any>,
     necessary_roles: Array<string>
   ): Promise<boolean> {
-    if (!headers['X-Foret-Authorization']) {
+    if (!headers['AUTH']) {
       return false
     }
 
-    return await this.authService.validateRole(
-      headers['X-Foret-Authorization'],
-      necessary_roles
-    )
+    return await this.authService.validateRole(headers['AUTH'], necessary_roles)
   }
 }
