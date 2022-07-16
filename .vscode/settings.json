@@ -1,0 +1,23 @@
+{
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "workbench.colorTheme": "Community Material Theme Darker High Contrast",
+  "workbench.iconTheme": "material-icon-theme",
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "css.completion.completePropertyWithSemicolon": false,
+  "less.completion.completePropertyWithSemicolon": false,
+  "scss.completion.completePropertyWithSemicolon": false,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "prettier.jsxSingleQuote": true,
+  "prettier.semi": false,
+  "thunder-client.codeSnippetLanguage": "powershell"
+}
