@@ -1,10 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { ClientProxy, Ctx, RmqContext } from '@nestjs/microservices'
+import {
+  ClientProxy,
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext
+} from '@nestjs/microservices'
 
 @Injectable()
 export class RabbitmqService {
-  constructor(
-    @Inject('RabbitMQ') private readonly rmq: ClientProxy,
-    @Ctx() private readonly context: RmqContext
-  ) {}
+  @MessagePattern()
+  example(
+    @Inject('RabbitMQ') rmq: ClientProxy,
+    @Payload() data: Array<any>,
+    @Ctx() context: RmqContext
+  ) {
+    return
+  }
 }

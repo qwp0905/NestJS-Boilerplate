@@ -13,8 +13,3 @@ export class Article {
 export type ArticleDocument = Article & Document
 
 export const ArticleSchema = SchemaFactory.createForClass(Article)
-
-export const ArticleCollection = MongooseModule.forFeature(
-  [{ name: Article.name, schema: ArticleSchema }],
-  'mongo'
-)

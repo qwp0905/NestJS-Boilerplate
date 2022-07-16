@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
 import { RabbitmqService } from './rabbitmq.service'
 
@@ -6,7 +7,7 @@ describe('RabbitmqService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RabbitmqService]
+      providers: [ConfigService, RabbitmqService]
     }).compile()
 
     service = module.get<RabbitmqService>(RabbitmqService)

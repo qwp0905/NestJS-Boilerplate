@@ -7,6 +7,7 @@ import { HttpModule } from '@nestjs/axios'
 import { ApiModule } from './api/api.module'
 import { CacheModule } from './cache/cache.module'
 import { AppService } from './app.service'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { AppService } from './app.service'
     DatabaseModule,
     HttpModule,
     CacheModule,
-    ApiModule
+    ApiModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService]

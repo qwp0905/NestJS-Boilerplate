@@ -16,4 +16,7 @@ export class User {
     default: '123123'
   })
   statusMessage: string
+
+  @Column()
+  roles: Array<string>
 }
