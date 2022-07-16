@@ -8,6 +8,10 @@ import { Article, ArticleSchema } from './article.schema'
     MongooseModule.forFeature(
       [{ name: Article.name, schema: ArticleSchema }],
       'mongo'
+    ),
+    MongooseModule.forFeature(
+      [{ name: Article.name, schema: ArticleSchema }],
+      'mongo_1'
     )
   ],
   providers: [ArticleModel],
