@@ -3,11 +3,10 @@ import { BasicStrategy } from './strategies/basic.strategy'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { JwtModule } from '@nestjs/jwt'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserRepository } from '../models/mysql/user/user.repository'
 import { CacheModule } from '../cache/cache.module'
 import { PassportModule } from '@nestjs/passport'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { UserRepositoryModule } from '../models/mysql/user/user.repository.module'
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
         signOptions: { expiresIn: '60s' }
       })
     }),
-    TypeOrmModule.forFeature([UserRepository], 'MySQL'),
+    UserRepositoryModule,
     CacheModule,
     PassportModule
   ],

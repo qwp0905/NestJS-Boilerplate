@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
 import { CacheService } from '../cache/cache.service'
 import { User } from '../models/mysql/user/user.entity'
 import { UserRepository } from '../models/mysql/user/user.repository'
@@ -7,7 +6,6 @@ import { UserRepository } from '../models/mysql/user/user.repository'
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserRepository, 'MySQL')
     private readonly userRepository: UserRepository,
     private readonly cacheService: CacheService
   ) {}
