@@ -1,4 +1,4 @@
-import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, SchemaTypes } from 'mongoose'
 
 @Schema({ collection: '123' })
