@@ -59,6 +59,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/amqplib": "^0.8.2",
     "@types/cache-manager": "^4.0.1",
     "@types/cache-manager-ioredis": "^2.0.2",
     "@types/cookie-parser": "^1.4.3",
