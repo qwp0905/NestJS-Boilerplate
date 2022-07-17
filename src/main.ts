@@ -40,7 +40,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter())
 
-  app.startAllMicroservices()
+  await app.startAllMicroservices()
 
   await app.listen(3000)
 }

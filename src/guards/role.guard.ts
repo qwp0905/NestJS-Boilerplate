@@ -25,13 +25,13 @@ export class RoleGuard implements CanActivate {
   }
 
   async validateRole(
-    @Headers() headers: Record<string, any>,
+    @Headers('AUTH') auth_key: string,
     necessary_roles: Array<string>
   ): Promise<boolean> {
-    if (!headers['AUTH']) {
+    if (!auth_key) {
       return false
     }
 
-    return await this.authService.validateRole(headers['AUTH'], necessary_roles)
+    return await this.authService.validateRole(auth_key, necessary_roles)
   }
 }
