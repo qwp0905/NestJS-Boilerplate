@@ -5,7 +5,9 @@ export const configuration: ConfigModuleOptions = {
   ignoreEnvFile: false,
   envFilePath: [
     '.env',
-    process.env.NODE_ENV === 'development' ? '.env.dev' : '.env.prod',
+    process.env.NODE_ENV === 'development'
+      ? '.env.development'
+      : '.env.production',
     process.platform === 'win32' || process.platform === 'darwin'
       ? '.env.public'
       : '.env.private'
