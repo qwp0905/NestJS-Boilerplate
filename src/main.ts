@@ -8,6 +8,7 @@ import { urlencoded } from 'express'
 import * as morgan from 'morgan'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
+import { HttpInterceptor } from './interceptors/http.interceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -41,6 +42,8 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter())
 
   await app.startAllMicroservices()
+
+  app.useGlobalInterceptors(new HttpInterceptor())
 
   await app.listen(3000)
 }

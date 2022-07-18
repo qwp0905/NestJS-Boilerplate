@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { getRepositoryToken } from '@nestjs/typeorm'
 import { CacheService } from '../cache/cache.service'
 import { UserRepository } from '../models/mysql/user/user.repository'
 import { Mock } from '../types/test.type'
@@ -21,7 +20,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: getRepositoryToken(UserRepository, 'MySQL'),
+          provide: UserRepository,
           useValue: mockUserRepository()
         },
         {
@@ -32,7 +31,7 @@ describe('AuthService', () => {
     }).compile()
 
     service = module.get<AuthService>(AuthService)
-    userRepository = module.get(getRepositoryToken(UserRepository, 'MySQL'))
+    userRepository = module.get(UserRepository)
     cacheService = module.get(CacheService)
   })
 
