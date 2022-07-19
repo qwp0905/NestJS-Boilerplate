@@ -1,7 +1,7 @@
 import { CACHE_MANAGER } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Cache } from 'cache-manager'
-import { Mock } from '../types/test.type'
+import { Mock } from '../common/types/test.type'
 import { CacheService } from './cache.service'
 
 const mockCache = () => ({})

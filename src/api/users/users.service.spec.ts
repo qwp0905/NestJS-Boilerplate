@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios'
 import { Test, TestingModule } from '@nestjs/testing'
 import { UserRepository } from '../../models/mysql/user/user.repository'
-import { Mock } from '../../types/test.type'
+import { Mock } from '../../common/types/test.type'
 import { UsersService } from './users.service'
 
 const mockHttpService = () => ({})

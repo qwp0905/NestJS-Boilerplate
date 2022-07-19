@@ -1,17 +1,29 @@
 import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
-import { RedisProvider } from './redis.provider'
+import Redis from 'ioredis'
+import { Mock } from '../common/types/test.type'
 import { RedisService } from './redis.service'
+
+const mockRedis = () => ({})
 
 describe('RedisService', () => {
   let service: RedisService
+  let redis: Mock<Redis>
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RedisService, ConfigService, RedisProvider(1, 'REDIS_1')]
+      providers: [
+        RedisService,
+        ConfigService,
+        {
+          provide: 'REDIS_1',
+          useValue: mockRedis()
+        }
+      ]
     }).compile()
 
     service = module.get<RedisService>(RedisService)
+    redis = module.get('REDIS_1')
   })
 
   it('should be defined', () => {

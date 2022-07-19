@@ -15,7 +15,11 @@ export class HttpInterceptor implements NestInterceptor {
     const res = context.switchToHttp().getResponse()
     return next.handle().pipe(
       map((data) => {
-        res.json({ result: true, data })
+        res.json({
+          result: true,
+          data,
+          timestamp: new Date().toISOString()
+        })
       })
     )
   }

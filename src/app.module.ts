@@ -5,7 +5,6 @@ import { configuration } from './config/configuration'
 import { DatabaseModule } from './databasse/database.module'
 import { HttpModule } from '@nestjs/axios'
 import { ApiModule } from './api/api.module'
-import { CacheModule } from './cache/cache.module'
 import { AuthModule } from './auth/auth.module'
 
 @Module({
@@ -13,7 +12,6 @@ import { AuthModule } from './auth/auth.module'
     ConfigModule.forRoot(configuration),
     DatabaseModule,
     HttpModule,
-    CacheModule,
     ApiModule,
     AuthModule
   ],
