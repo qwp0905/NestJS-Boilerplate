@@ -19,5 +19,6 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "prettier.jsxSingleQuote": true,
   "prettier.semi": false,
-  "thunder-client.codeSnippetLanguage": "powershell"
+  "thunder-client.codeSnippetLanguage": "powershell",
+  "material-icon-theme.activeIconPack": "nest"
 }
