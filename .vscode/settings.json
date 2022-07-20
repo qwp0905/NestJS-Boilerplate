@@ -20,5 +20,7 @@
   "prettier.jsxSingleQuote": true,
   "prettier.semi": false,
   "thunder-client.codeSnippetLanguage": "powershell",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
   "material-icon-theme.activeIconPack": "nest"
 }
