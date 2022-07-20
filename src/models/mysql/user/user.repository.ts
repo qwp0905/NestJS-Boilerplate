@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Connection } from 'mysql'
 import { Repository } from 'typeorm'
-import { DatabaseService } from '../../../databasse/database.service'
+import { query } from '../../../common/util'
 import { User } from './user.entity'
 
 @Injectable()
@@ -10,7 +11,8 @@ export class UserRepository {
   constructor(
     @InjectRepository(User, 'MySQL')
     private readonly repository: Repository<User>,
-    private readonly SQL: DatabaseService
+    @Inject('sql')
+    private readonly SQL: Connection
   ) {}
   async findById(id: number): Promise<User> {
     const user = await this.repository.findOne({ where: { id } })
@@ -23,8 +25,9 @@ export class UserRepository {
   }
 
   async findByIdQuery(id: number): Promise<User> {
-    const user = await this.SQL.query<User>(
-      `SELECT * FROM ${this.table} WHERE id = ?`,
+    const user = await query<User>(
+      this.SQL,
+      `SELECT * FROM ${this.table} WHERE id = (?)`,
       [id]
     )
     return user
