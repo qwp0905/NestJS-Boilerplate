@@ -6,6 +6,7 @@ import { User } from './user.entity'
 
 @Injectable()
 export class UserRepository {
+  private readonly table = 'User'
   constructor(
     @InjectRepository(User, 'MySQL')
     private readonly repository: Repository<User>,
@@ -22,9 +23,10 @@ export class UserRepository {
   }
 
   async findByIdQuery(id: number): Promise<User> {
-    const user = await this.SQL.query<User>(`SELECT * FROM User WHERE id = ?`, [
-      id
-    ])
+    const user = await this.SQL.query<User>(
+      `SELECT * FROM ${this.table} WHERE id = ?`,
+      [id]
+    )
     return user
   }
 }
