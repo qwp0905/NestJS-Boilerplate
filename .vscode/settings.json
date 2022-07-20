@@ -2,7 +2,7 @@
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "workbench.colorTheme": "Community Material Theme Darker High Contrast",
+  "workbench.colorTheme": "Monokai Dimmed",
   "workbench.iconTheme": "material-icon-theme",
   "javascript.format.enable": false,
   "typescript.format.enable": false,
