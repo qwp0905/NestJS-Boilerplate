@@ -17,6 +17,6 @@ export class User {
   })
   statusMessage: string
 
-  @Column()
-  roles: Array<string>
+  // @Column()
+  // roles: Array<string>
 }

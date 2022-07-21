@@ -3,6 +3,7 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions
 } from '@nestjs/typeorm'
+import { DataSource } from 'typeorm'
 
 export const typeORMConfig: TypeOrmModuleAsyncOptions = {
   name: 'MySQL',
@@ -16,7 +17,9 @@ export const typeORMConfig: TypeOrmModuleAsyncOptions = {
     password: configService.get<string>('DATABASE_PASSWORD'),
     database: configService.get<string>('DATABASE_NAME'),
     entities: ['dist/**/*.entity{.ts,.js}'],
-    synchronize: false,
-    typename: 'MySQL'
-  })
+    synchronize: false
+  }),
+  dataSourceFactory: async (options) => {
+    return await new DataSource(options).initialize()
+  }
 }
