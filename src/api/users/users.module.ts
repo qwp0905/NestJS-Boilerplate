@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { UsersController } from './users.controller'
 import { HttpModule } from '@nestjs/axios'
-import { DataSourceModule } from '../../models/mysql/dataSource.module'
+import { MysqlModule } from '../../models/mysql/mysql.module'
 
 @Module({
-  imports: [HttpModule, DataSourceModule],
+  imports: [HttpModule, MysqlModule],
   providers: [UsersService],
   controllers: [UsersController]
 })

@@ -1,14 +1,14 @@
 import { HttpService } from '@nestjs/axios'
 import { Injectable } from '@nestjs/common'
-import { DataSourceService } from '../../models/mysql/dataSource.service'
+import { MysqlService } from '../../models/mysql/mysql.service'
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly dataSource: DataSourceService
+    private readonly mysqlService: MysqlService
   ) {}
   hi() {
-    return this.dataSource.selectOnUser()
+    return this.mysqlService.selectOnUser()
   }
 }

@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import { InjectDataSource } from '@nestjs/typeorm'
-import { DataSource } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { EntityManager } from 'typeorm'
 import { User } from './user/user.entity'
 
 @Injectable()
-export class DataSourceService {
-  constructor(@InjectDataSource('MySQL') private readonly conn: DataSource) {}
+export class MysqlService {
+  constructor(
+    @InjectEntityManager('MySQL') private readonly conn: EntityManager
+  ) {}
 
   async selectOnUser() {
     const user: User = await this.conn.query(
