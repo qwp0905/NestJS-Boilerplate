@@ -12,14 +12,13 @@ export class HttpInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>
   ): Observable<any> | Promise<Observable<any>> {
-    const res = context.switchToHttp().getResponse()
     return next.handle().pipe(
       map((data) => {
-        res.json({
+        return {
           result: true,
           data,
           timestamp: new Date().toISOString()
-        })
+        }
       })
     )
   }
