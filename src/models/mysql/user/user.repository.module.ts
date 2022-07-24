@@ -8,4 +8,4 @@ import { UserRepository } from './user.repository'
   providers: [UserRepository],
   exports: [UserRepository]
 })
-export class UserRepositoryModule {}
+export class UserTable {}

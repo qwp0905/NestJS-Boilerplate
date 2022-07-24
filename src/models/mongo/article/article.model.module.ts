@@ -17,4 +17,4 @@ import { Article, ArticleSchema } from './article.schema'
   providers: [ArticleModel],
   exports: [ArticleModel]
 })
-export class ArticleModelModule {}
+export class ArticleCollection {}
