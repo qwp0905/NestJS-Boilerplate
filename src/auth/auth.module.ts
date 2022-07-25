@@ -5,7 +5,7 @@ import { JwtStrategy } from './strategies/jwt.strategy'
 import { JwtModule } from '@nestjs/jwt'
 import { CacheModule } from '../cache/cache.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { UserRepositoryModule } from '../models/mysql/user/user.repository.module'
+import { UserTable } from '../models/mysql/user/user.repository.module'
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { UserRepositoryModule } from '../models/mysql/user/user.repository.modul
         signOptions: { expiresIn: '60s' }
       })
     }),
-    UserRepositoryModule,
+    UserTable,
     CacheModule
   ],
   providers: [BasicStrategy, JwtStrategy, AuthService]
