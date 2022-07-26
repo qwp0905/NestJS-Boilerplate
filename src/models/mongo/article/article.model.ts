@@ -21,7 +21,7 @@ export class ArticleModel {
   async find(
     query: FilterQuery<ArticleDocument> = {},
     projection: ProjectionType<ArticleDocument> = {},
-    options: QueryOptions = {}
+    options: QueryOptions<ArticleDocument> = {}
   ) {
     const target = await this.model_secondary.find(query, projection, options)
     return target
@@ -29,9 +29,14 @@ export class ArticleModel {
 
   async updateOne(
     query: FilterQuery<ArticleDocument>,
-    update_query: UpdateQuery<ArticleDocument>
+    update_query: UpdateQuery<Article>
   ) {
     await this.model.updateOne(query, update_query)
+    return true
+  }
+
+  async insertMay(documents: Array<Article>) {
+    await this.model.insertMany(documents)
     return true
   }
 }

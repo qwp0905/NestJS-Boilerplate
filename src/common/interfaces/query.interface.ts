@@ -11,7 +11,7 @@ export interface SqlQueryResult {
   changedRows: number
 }
 
-export interface MongoQueryBuiler<T = any> {
+export interface MongoQueryBuiler<T> {
   add: (key: keyof T, value: any) => MongoQueryBuiler<T>
   not: (key: keyof T, value: any) => MongoQueryBuiler<T>
   gt: (key: keyof T, value: any) => MongoQueryBuiler<T>
@@ -25,7 +25,7 @@ export interface MongoQueryBuiler<T = any> {
     options?: RegexOptions | undefined
   ) => MongoQueryBuiler<T>
   in: (key: keyof T, value: Array<any> | undefined) => MongoQueryBuiler<T>
-  ne: (key: keyof T, value: Array<any> | undefined) => MongoQueryBuiler<T>
+  ne: (key: keyof T, value: any) => MongoQueryBuiler<T>
   nin: (key: keyof T, value: Array<any> | undefined) => MongoQueryBuiler<T>
   or: (conditions: Array<FilterQuery<T>> | undefined) => MongoQueryBuiler<T>
   and: (conditions: Array<FilterQuery<T>> | undefined) => MongoQueryBuiler<T>
@@ -37,4 +37,10 @@ export interface MongoUpdateQueryBuilder<T> {
   set: (key: keyof T, value: any) => MongoUpdateQueryBuilder<T>
   unset: (key: keyof T, value: any) => MongoUpdateQueryBuilder<T>
   build: () => UpdateQuery<T>
+}
+
+export interface RootQuerySelector<T> {
+  $and: Array<FilterQuery<T>>
+  $nor: Array<FilterQuery<T>>
+  $or: Array<FilterQuery<T>>
 }

@@ -1,42 +1,65 @@
-import { FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
-import { MongoQueryBuiler } from './interfaces/query.interface'
+import {
+  Condition,
+  FilterQuery,
+  QuerySelector,
+  RegexOptions,
+  UpdateQuery
+} from 'mongoose'
+import {
+  MongoQueryBuiler,
+  RootQuerySelector
+} from './interfaces/query.interface'
 
-export const QueryBuilders = <T = any>(): MongoQueryBuiler => {
-  let query: FilterQuery<T> = {}
+export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
+  const query: FilterQuery<T> = {}
+  const setKey = (key: keyof T, tag: keyof QuerySelector<T>, value: any) => {
+    if (value === undefined) return
+    if (Array.isArray(value) && !value.length) return
+    const condition: Condition<T> = {}
+    if (!query[key]) query[key] = condition
+    query[key][tag] = value
+  }
+  const setCondition = (
+    tag: keyof RootQuerySelector<T>,
+    condition: FilterQuery<T> | Array<FilterQuery<T>>
+  ) => {
+    if (!condition || !condition.length) return
+    if (!query[tag]) query[tag] = []
+    if (Array.isArray(condition)) {
+      query[tag] = [...query[tag], ...condition]
+    } else {
+      query[tag].push(condition)
+    }
+  }
   return {
     add(key: keyof T, value: any) {
-      if (value === undefined || !value.length) return this
+      if (value === undefined) return this
+      if (Array.isArray(value) && !value.length) return this
       query[key] = value
       return this
     },
     not(key: keyof T, value: any) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $not: value } }
+      setKey(key, '$not', value)
       return this
     },
     gt(key: keyof T, value: any) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $gt: value } }
+      setKey(key, '$gt', value)
       return this
     },
     gte(key: keyof T, value: any) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $gte: value } }
+      setKey(key, '$gte', value)
       return this
     },
     lt(key: keyof T, value: any) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $lt: value } }
+      setKey(key, '$lt', value)
       return this
     },
     lte(key: keyof T, value: any) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $lte: value } }
+      setKey(key, '$lte', value)
       return this
     },
     exists(key: keyof T, value: boolean | undefined) {
-      if (value === undefined) return this
-      query = { ...query, [key]: { $exists: value } }
+      setKey(key, '$exists', value)
       return this
     },
     regex(
@@ -44,41 +67,32 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler => {
       pattern: RegExp | undefined,
       options?: RegexOptions | undefined
     ) {
-      if (!pattern) return this
-      query = {
-        ...query,
-        [key]: { $regex: pattern, $options: options }
-      }
+      setKey(key, '$regex', pattern)
+      if (options) setKey(key, '$options', options)
       return this
     },
     in(key: keyof T, value: Array<any> | undefined) {
-      if (value === undefined || !value.length) return this
-      query = { ...query, [key]: { $in: value } }
+      setKey(key, '$in', value)
       return this
     },
-    ne(key: keyof T, value: Array<any> | undefined) {
-      if (value === undefined || !value.length) return this
-      query = { ...query, [key]: { $ne: value } }
+    ne(key: keyof T, value: any | undefined) {
+      setKey(key, '$ne', value)
       return this
     },
     nin(key: keyof T, value: Array<any> | undefined) {
-      if (value === undefined || !value.length) return this
-      query = { ...query, [key]: { $nin: value } }
+      setKey(key, '$nin', value)
       return this
     },
-    or(conditions: Array<FilterQuery<T>> | undefined) {
-      if (conditions === undefined || !conditions.length) return this
-      query.$or = conditions
+    or(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+      setCondition('$or', conditions)
       return this
     },
-    and(conditions: Array<FilterQuery<T>> | undefined) {
-      if (conditions === undefined || !conditions.length) return this
-      query.$and = conditions
+    and(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+      setCondition('$and', conditions)
       return this
     },
-    nor(conditions: Array<FilterQuery<T>> | undefined) {
-      if (conditions === undefined || !conditions.length) return this
-      query.$nor = conditions
+    nor(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+      setCondition('$nor', conditions)
       return this
     },
     build() {
@@ -97,8 +111,8 @@ export const UpdateQueryBuilder = <T = any>() => {
       return this
     },
     unset(key: keyof T) {
-      if (!query.$unset) query.$unset = {}
-      query.$unset = { ...query.$unset, [key]: 1 }
+      if (!query.$unset) query.$unset = []
+      query.$unset.push(key)
       return this
     },
     build() {

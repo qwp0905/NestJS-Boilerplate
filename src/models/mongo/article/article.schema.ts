@@ -1,13 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document, SchemaTypes } from 'mongoose'
+import { Document } from 'mongoose'
 
-@Schema({ collection: '123' })
+@Schema({ collection: 'test1', versionKey: false })
 export class Article {
-  @Prop({ type: SchemaTypes.ObjectId })
-  _id: string
+  @Prop()
+  article_id: number
 
   @Prop()
   context: string
+
+  @Prop()
+  writer_name: string
+
+  @Prop()
+  dt: Date
 }
 
 export type ArticleDocument = Article & Document
