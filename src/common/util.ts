@@ -23,7 +23,7 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
     tag: keyof RootQuerySelector<T>,
     condition: FilterQuery<T> | Array<FilterQuery<T>>
   ) => {
-    if (!condition || !condition.length) return
+    if (!condition || !Object.keys(condition).length) return
     if (!query[tag]) query[tag] = []
     if (Array.isArray(condition)) {
       query[tag] = [...query[tag], ...condition]
@@ -105,7 +105,7 @@ export const UpdateQueryBuilder = <T = any>() => {
   const query: UpdateQuery<T> = {}
   return {
     set(key: keyof T, value: any) {
-      if (value === undefined || !value.length) return this
+      if (value === undefined || !Object.keys(value).length) return this
       if (!query.$set) query.$set = {}
       query.$set[key] = value
       return this
