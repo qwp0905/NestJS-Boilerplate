@@ -15,5 +15,6 @@ export const MongooseConfig: MongooseModuleAsyncOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     autoCreate: false
+    // readReference: 'secondary'
   })
 }
