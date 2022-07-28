@@ -17,8 +17,8 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
     done: (err: any, user?: any) => void
   ) {
     if (
-      this.configService.get('BASIC_USER') === username &&
-      this.configService.get('BASIC_PASSWORD') === password
+      this.configService.get<string>('BASIC_USER') === username &&
+      this.configService.get<string>('BASIC_PASSWORD') === password
     ) {
       return done(null, true)
     } else return done(new UnauthorizedException('인증에 실패했습니다.'))

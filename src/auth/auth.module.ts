@@ -13,7 +13,7 @@ import { UserTable } from '../models/mysql/user/user.repository.module'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
+        secret: configService.get<string>('JWT_SECRET'),
         signOptions: { expiresIn: '60s' }
       })
     }),
