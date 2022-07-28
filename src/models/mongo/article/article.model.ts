@@ -13,8 +13,6 @@ import { Article, ArticleDocument } from './article.schema'
 export class ArticleModel {
   constructor(
     @InjectModel(Article.name, 'mongo')
-    private readonly model_secondary: Model<ArticleDocument>,
-    @InjectModel(Article.name, 'mongo_1')
     private readonly model: Model<ArticleDocument>
   ) {}
 
@@ -23,7 +21,7 @@ export class ArticleModel {
     projection: ProjectionType<ArticleDocument> = {},
     options: QueryOptions<ArticleDocument> = {}
   ) {
-    const target = await this.model_secondary.find(query, projection, options)
+    const target = await this.model.find(query, projection, options)
     return target
   }
 
