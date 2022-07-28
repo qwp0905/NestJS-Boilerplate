@@ -16,7 +16,7 @@ import { CacheService } from './cache.service'
       useFactory: (configService: ConfigService): CacheModuleOptions => ({
         transport: Transport.REDIS,
         store: redisStore,
-        host: configService.get('REDIS_HOST'),
+        host: configService.get<string>('REDIS_HOST'),
         port: 6379,
         db: 1,
         ttl: 3600 * 48,

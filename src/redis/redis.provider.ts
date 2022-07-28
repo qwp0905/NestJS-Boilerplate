@@ -7,7 +7,7 @@ export const RedisProvider = (id: number, name: string): Provider => ({
   inject: [ConfigService],
   useFactory: (configService: ConfigService): Redis =>
     new IORedis({
-      host: configService.get('REDIS_HOST'),
+      host: configService.get<string>('REDIS_HOST'),
       port: 6379,
       db: id
     }),
