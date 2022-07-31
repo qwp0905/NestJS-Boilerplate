@@ -3,11 +3,9 @@
 
 npm run test
 
-if read local_ref local_sha remote_ref remote_sha
-then
-    if [ "$remote_ref" == "main" ]
-    then
-        echo "DO NOT PUSH it master"
-        exit 1 # 금지된 ref 로 push 를 실행하면 에러
-    fi
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "main" ]; then
+  echo "You can't commit directly to main branch"
+  exit 1
 fi
