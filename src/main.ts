@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-
 import helmet from 'helmet'
 import * as cookieParser from 'cookie-parser'
 import { urlencoded } from 'express'
@@ -8,7 +7,10 @@ import * as morgan from 'morgan'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
 import { BasicGuard } from './common/guards/basic.guard'
-import { HttpExceptionFilter } from './common/filters/http-exception.filter'
+import {
+  ErrorFilter,
+  HttpExceptionFilter
+} from './common/filters/http-exception.filter'
 import { HttpInterceptor } from './common/interceptors/http.interceptor'
 
 async function bootstrap() {
@@ -46,7 +48,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new BasicGuard())
 
-  app.useGlobalFilters(new HttpExceptionFilter())
+  app.useGlobalFilters(new HttpExceptionFilter(), new ErrorFilter())
 
   await app.startAllMicroservices()
 

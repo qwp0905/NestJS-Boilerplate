@@ -22,5 +22,7 @@
   "thunder-client.codeSnippetLanguage": "powershell",
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",
-  "material-icon-theme.activeIconPack": "nest"
+  "material-icon-theme.activeIconPack": "nest",
+  "files.autoSave": "onFocusChange",
+  "prettier.printWidth": 80
 }

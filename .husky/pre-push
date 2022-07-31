@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run test
+
+if read local_ref local_sha remote_ref remote_sha
+then
+    if [ "$remote_ref" == "main" ]
+    then
+        echo "DO NOT PUSH it master"
+        exit 1 # 금지된 ref 로 push 를 실행하면 에러
+    fi
+fi
