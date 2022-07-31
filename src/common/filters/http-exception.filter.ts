@@ -12,7 +12,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
     res.json({
-      code: 0,
+      code: exception.getStatus(),
       result: false,
       message: exception.message,
       timestamp: new Date().toISOString()
