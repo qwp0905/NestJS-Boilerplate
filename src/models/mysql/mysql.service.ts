@@ -11,9 +11,11 @@ export class MysqlService {
 
   async selectOnUser() {
     const user: User = await this.conn.query(
-      `SELECT Users.id,Article.id as article_id
+      `SELECT Users.id,COUNT(
+        SELECT id FROM articles
+          WHERE articles.user_id = Users.id
+      ).id as articles
         FROM Users
-        LEFT JOIN Article on Users.id = Article.user_id
         WHERE Users.id = (?)`,
       [3]
     )
