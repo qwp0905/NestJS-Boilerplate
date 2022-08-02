@@ -6,9 +6,8 @@ import { UsersService } from './users.service'
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Get()
-  @Signature()
-  hi() {
-    return this.userService.hi()
+  @Get('/12312312312312')
+  hi(@Signature() signature) {
+    return this.userService.hi(signature)
   }
 }
