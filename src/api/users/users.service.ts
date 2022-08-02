@@ -7,10 +7,9 @@ import { MysqlService } from '../../models/mysql/mysql.service'
 export class UsersService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly mysqlService: MysqlService,
-    private readonly cacheService: CacheService
+    private readonly mysqlService: MysqlService
   ) {}
-  async hi() {
-    return await this.cacheService.get('signature')
+  async hi(any: any) {
+    return any
   }
 }
