@@ -8,6 +8,6 @@ export class UsersController {
 
   @Get('/12312312312312')
   hi(@Signature() signature) {
-    return this.userService.hi(signature)
+    return signature
   }
 }
