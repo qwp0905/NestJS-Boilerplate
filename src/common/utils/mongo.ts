@@ -105,7 +105,11 @@ export const UpdateQueryBuilder = <T = any>() => {
   const query: UpdateQuery<T> = {}
   return {
     set(key: keyof T, value: any) {
-      if (value === undefined || !Object.keys(value).length) return this
+      if (
+        value === undefined ||
+        (typeof value === 'object' && !Object.keys(value).length)
+      )
+        return this
       if (!query.$set) query.$set = {}
       query.$set[key] = value
       return this
