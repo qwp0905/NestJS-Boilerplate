@@ -6,7 +6,8 @@ const GetSignature = createParamDecorator(
   async (data: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest<Request>()
     const key = request.headers['x-123123']
-    return key
+    const _at = request.url
+    return { key, _at }
   }
 )
 
