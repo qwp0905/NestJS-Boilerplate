@@ -3,7 +3,6 @@ import { BasicStrategy } from './strategies/basic.strategy'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { JwtModule } from '@nestjs/jwt'
-import { CacheModule } from '../cache/cache.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { UserTable } from '../models/mysql/user/user.repository.module'
 
@@ -17,8 +16,7 @@ import { UserTable } from '../models/mysql/user/user.repository.module'
         signOptions: { expiresIn: '60s' }
       })
     }),
-    UserTable,
-    CacheModule
+    UserTable
   ],
   providers: [BasicStrategy, JwtStrategy, AuthService]
 })

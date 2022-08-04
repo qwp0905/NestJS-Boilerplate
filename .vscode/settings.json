@@ -17,12 +17,10 @@
   "less.completion.completePropertyWithSemicolon": false,
   "scss.completion.completePropertyWithSemicolon": false,
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "prettier.jsxSingleQuote": true,
-  "prettier.semi": false,
   "thunder-client.codeSnippetLanguage": "powershell",
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",
   "material-icon-theme.activeIconPack": "nest",
   "files.autoSave": "onFocusChange",
-  "prettier.printWidth": 80
+  "prettier.configPath": ".prettierrc"
 }
