@@ -10,6 +10,6 @@ export class CacheService {
   }
 
   async set(key: string, value: any, ttl = 60 * 1000) {
-    await this.cache.set(key, value, { ttl })
+    return await this.cache.set(key, value, { ttl })
   }
 }

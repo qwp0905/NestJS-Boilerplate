@@ -6,7 +6,7 @@ import { urlencoded } from 'express'
 import * as morgan from 'morgan'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
-import { BasicGuard } from './common/guards/basic.guard'
+import { BasicGuard } from './common/guards/auth.guard'
 import {
   ErrorFilter,
   HttpExceptionFilter
@@ -27,7 +27,6 @@ async function bootstrap() {
     .setTitle('title')
     .setDescription('description')
     .setVersion('0.0.1')
-    .addBasicAuth()
     .build()
 
   const api_document = SwaggerModule.createDocument(app, swagger_config)
@@ -54,6 +53,8 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new HttpInterceptor())
 
-  await app.listen(3000)
+  await app.listen(3000, () => {
+    console.log((process.env.NODE_ENV || 'production') + '환경에서 접속 중')
+  })
 }
 bootstrap()

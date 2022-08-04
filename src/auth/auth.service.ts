@@ -1,14 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { CacheService } from '../cache/cache.service'
 import { User } from '../models/mysql/user/user.entity'
 import { UserRepository } from '../models/mysql/user/user.repository'
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly cacheService: CacheService
-  ) {}
+  constructor(private readonly userRepository: UserRepository) {}
   async validateUser({ email }: User): Promise<boolean> {
     if (!email) {
       throw new UnauthorizedException()
