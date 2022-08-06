@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { WebClient } from '@slack/web-api'
-import { SlackFile, SlackImage } from '../common/interfaces/slack.interface'
-import { MessageBuilder } from '../common/utils/slack'
+import { SlackFile, SlackImage } from '@interfaces/slack.interface'
+import { MessageBuilder } from '@utils/slack'
 
 @Injectable()
 export class SlackService {

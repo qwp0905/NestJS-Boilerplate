@@ -1,7 +1,7 @@
+import { User } from '@models/mysql/user/user.entity'
+import { UserRepository } from '@models/mysql/user/user.repository'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { User } from './user.entity'
-import { UserRepository } from './user.repository'
 
 @Module({
   imports: [TypeOrmModule.forFeature([User], 'MySQL')],

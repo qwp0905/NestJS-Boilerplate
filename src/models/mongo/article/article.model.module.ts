@@ -1,7 +1,7 @@
+import { ArticleModel } from '@models/mongo/article/article.model'
+import { Article, ArticleSchema } from '@models/mongo/article/article.schema'
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ArticleModel } from './article.model'
-import { Article, ArticleSchema } from './article.schema'
 
 @Module({
   imports: [
