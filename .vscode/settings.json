@@ -18,9 +18,12 @@
   "scss.completion.completePropertyWithSemicolon": false,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "thunder-client.codeSnippetLanguage": "powershell",
-  "javascript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "material-icon-theme.activeIconPack": "nest",
   "files.autoSave": "onFocusChange",
-  "prettier.configPath": ".prettierrc"
+  "prettier.configPath": ".prettierrc",
+  "prettier.requireConfig": true,
+  "javascript.preferences.useAliasesForRenames": true,
+  "typescript.preferences.useAliasesForRenames": true
 }

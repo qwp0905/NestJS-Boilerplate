@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { MongooseConfig } from './mongoose.config'
-import { typeORMConfig } from './typeorm.config'
+import { MongooseConfig } from '@database/mongoose.config'
+import { typeORMConfig } from '@database/typeorm.config'
 
 @Module({
   imports: [

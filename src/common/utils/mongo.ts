@@ -8,7 +8,7 @@ import {
 import {
   MongoQueryBuiler,
   RootQuerySelector
-} from '../interfaces/query.interface'
+} from '@interfaces/query.interface'
 
 export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
   const query: FilterQuery<T> = {}

@@ -6,7 +6,7 @@ import {
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientOptions, Transport } from '@nestjs/microservices'
 import * as redisStore from 'cache-manager-ioredis'
-import { CacheService } from './cache.service'
+import { CacheService } from '@cache/cache.service'
 
 @Module({
   imports: [

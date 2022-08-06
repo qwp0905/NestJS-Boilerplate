@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectEntityManager } from '@nestjs/typeorm'
 import { EntityManager } from 'typeorm'
-import { User } from './user/user.entity'
+import { User } from '@models/mysql/user/user.entity'
 
 @Injectable()
 export class MysqlService {

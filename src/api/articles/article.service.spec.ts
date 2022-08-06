@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { ArticleModel } from '../../models/mongo/article/article.model'
-import { Mock } from '../../common/types/test.type'
-import { ArticleService } from './article.service'
+import { ArticleModel } from '@models/mongo/article/article.model'
+import { Mock } from '@type/test.type'
+import { ArticleService } from '@api/articles/article.service'
 
 const mockArticleModel = (): Partial<ArticleModel> => ({})
 
