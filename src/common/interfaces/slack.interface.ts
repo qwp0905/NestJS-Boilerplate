@@ -3,16 +3,6 @@ export interface SlackImage {
   name: string
 }
 
-export interface SlackMessage {
-  channel?: string
-  user?: string
-  context: Array<string>
-  image?: SlackImage
-  mention: Array<string>
-  csv: Array<SlackFile>
-  tsv: Array<SlackFile>
-}
-
 export interface SlackFile {
   columns: Array<string>
   initial_comment?: string
