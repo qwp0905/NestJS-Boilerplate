@@ -17,7 +17,7 @@ export class SlackService {
 
   async send(
     name: string,
-    type: string,
+    type: 'user' | 'channel',
     context: Array<string>,
     mention: Array<string>,
     tsv: Array<SlackFile>,
