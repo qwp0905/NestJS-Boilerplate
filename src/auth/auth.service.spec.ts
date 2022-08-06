@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { CacheService } from '../cache/cache.service'
 import { UserRepository } from '../models/mysql/user/user.repository'
 import { Mock } from '../common/types/test.type'
 import { AuthService } from './auth.service'
