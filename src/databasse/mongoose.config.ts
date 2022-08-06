@@ -11,7 +11,7 @@ export const MongooseConfig: MongooseModuleAsyncOptions = {
   useFactory: async (
     configService: ConfigService
   ): Promise<MongooseModuleFactoryOptions> => ({
-    uri: configService.get<string>('URI'),
+    uri: configService.get<string>('MONGO_URI'),
     useNewUrlParser: true,
     useUnifiedTopology: true,
     autoCreate: false
