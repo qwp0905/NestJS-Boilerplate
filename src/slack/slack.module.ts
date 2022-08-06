@@ -9,7 +9,7 @@ import { SlackService } from './slack.service'
       provide: 'Slack',
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        return await new WebClient(configService.get<string>('SLACK_API_TOKEN'))
+        return new WebClient(configService.get<string>('SLACK_API_TOKEN'))
       }
     },
     SlackService
