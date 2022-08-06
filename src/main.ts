@@ -6,12 +6,12 @@ import { urlencoded } from 'express'
 import * as morgan from 'morgan'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
-import { BasicGuard } from './common/guards/auth.guard'
+import { BasicGuard } from '@guards/auth.guard'
 import {
   ErrorFilter,
   HttpExceptionFilter
-} from './common/filters/http-exception.filter'
-import { HttpInterceptor } from './common/interceptors/http.interceptor'
+} from '@filters/http-exception.filter'
+import { HttpInterceptor } from '@interceptors/http.interceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

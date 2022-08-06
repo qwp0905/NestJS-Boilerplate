@@ -1,4 +1,4 @@
-import { DiffData, DiffType } from '../types/diff.type'
+import { DiffData, DiffType } from '@type/diff.type'
 
 export const deepDiff = {
   VALUE_CREATED: DiffType.created,

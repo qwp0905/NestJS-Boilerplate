@@ -6,5 +6,25 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "setupFiles": ["dotenv/config"]
+  "setupFiles": ["dotenv/config"],
+  "moduleNameMapper": {
+    "^@src/(.*)$": "<rootDir>/../src/$1",
+    "^@api/(.*)$": "<rootDir>/../src/api/$1",
+    "^@auth/(.*)$": "<rootDir>/../src/auth/$1",
+    "^@cache/(.*)$": "<rootDir>/../src/cache/$1",
+    "^@interfaces/(.*)$": "<rootDir>/../src/common/interfaces/$1",
+    "^@utils/(.*)$": "<rootDir>/../src/common/utils/$1",
+    "^@decorators/(.*)$": "<rootDir>/../src/common/decorators/$1",
+    "^@filters/(.*)$": "<rootDir>/../src/common/filters/$1",
+    "^@interceptors/(.*)$": "<rootDir>/../src/common/interceptors/$1",
+    "^@guards/(.*)$": "<rootDir>/../src/common/guards/$1",
+    "^@pipes/(.*)$": "<rootDir>/../src/common/pipes/$1",
+    "^@type/(.*)$": "<rootDir>/../src/common/types/$1",
+    "^@config/(.*)$": "<rootDir>/../src/config/$1",
+    "^@database/(.*)$": "<rootDir>/../src/database/$1",
+    "^@models/(.*)$": "<rootDir>/../src/models/$1",
+    "^@rabbitmq/(.*)$": "<rootDir>/../src/rabbitmq/$1",
+    "^@redis/(.*)$": "<rootDir>/../src/redis/$1",
+    "^@slack/(.*)$": "<rootDir>/../src/slack/$1"
+  }
 }

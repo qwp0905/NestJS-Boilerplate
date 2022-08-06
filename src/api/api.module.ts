@@ -1,6 +1,6 @@
+import { ArticleModule } from '@api/articles/article.module'
+import { UsersModule } from '@api/users/users.module'
 import { Module } from '@nestjs/common'
-import { ArticleModule } from './articles/article.module'
-import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [UsersModule, ArticleModule]

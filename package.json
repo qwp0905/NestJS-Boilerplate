@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build && tsc-alias",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "cross-env NODE_ENV=development nest start --watch",
@@ -88,6 +88,7 @@
     "ts-jest": "28.0.5",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
+    "tsc-alias": "^1.7.0",
     "tsconfig-paths": "4.0.0",
     "typescript": "^4.3.5"
   },
@@ -107,7 +108,27 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
-    "verbose": true
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@src/(.*)$": "<rootDir>/$1",
+      "^@api/(.*)$": "<rootDir>/api/$1",
+      "^@auth/(.*)$": "<rootDir>/auth/$1",
+      "^@cache/(.*)$": "<rootDir>/cache/$1",
+      "^@interfaces/(.*)$": "<rootDir>/common/interfaces/$1",
+      "^@utils/(.*)$": "<rootDir>/common/utils/$1",
+      "^@decorators/(.*)$": "<rootDir>/common/decorators/$1",
+      "^@filters/(.*)$": "<rootDir>/common/filters/$1",
+      "^@interceptors/(.*)$": "<rootDir>/common/interceptors/$1",
+      "^@guards/(.*)$": "<rootDir>/common/guards/$1",
+      "^@pipes/(.*)$": "<rootDir>/common/pipes/$1",
+      "^@type/(.*)$": "<rootDir>/common/types/$1",
+      "^@config/(.*)$": "<rootDir>/config/$1",
+      "^@database/(.*)$": "<rootDir>/database/$1",
+      "^@models/(.*)$": "<rootDir>/models/$1",
+      "^@rabbitmq/(.*)$": "<rootDir>/rabbitmq/$1",
+      "^@redis/(.*)$": "<rootDir>/redis/$1",
+      "^@slack/(.*)$": "<rootDir>/slack/$1"
+    }
   },
   "lint-staged": {
     "src/**/*.ts": [

@@ -1,8 +1,8 @@
 import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
 import Redis from 'ioredis'
-import { Mock } from '../common/types/test.type'
-import { RedisService } from './redis.service'
+import { Mock } from '@type/test.type'
+import { RedisService } from '@redis/redis.service'
 
 const mockRedis = () => ({})
 
