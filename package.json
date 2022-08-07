@@ -2,9 +2,9 @@
   "name": "nestjs-type-orm-boilerplate",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "KwonJin Jung",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build && tsc-alias",
