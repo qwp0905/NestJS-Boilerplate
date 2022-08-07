@@ -47,7 +47,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new BasicGuard())
 
-  app.useGlobalFilters(new HttpExceptionFilter(), new ErrorFilter())
+  app.useGlobalFilters(new ErrorFilter(), new HttpExceptionFilter())
 
   await app.startAllMicroservices()
 
