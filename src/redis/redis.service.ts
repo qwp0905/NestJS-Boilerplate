@@ -9,7 +9,7 @@ export class RedisService {
     return await this.REDIS1.set(key, value, 'EX', expires_in)
   }
 
-  async getFromRedis1(key: string) {
+  async getFromRedis1(key: string): Promise<string> {
     return await this.REDIS1.get(key)
   }
 }

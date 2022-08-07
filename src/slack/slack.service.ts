@@ -61,13 +61,13 @@ export class SlackService {
   private async getChannelID(channel: string) {
     const list = (await this.web.conversations.list()).channels
     const target_channel = list.find((e) => e.name === channel)
-    return target_channel ? target_channel.id : ''
+    return target_channel?.id || ''
   }
 
   private async getUserID(user_name: string) {
     const users = await this.web.users.list()
     const target_user = users.members.find((e) => e.real_name === user_name)
-    return target_user ? target_user.id : ''
+    return target_user?.id || ''
   }
 
   private async sendText(channel: string, context: string, image?: SlackImage) {

@@ -7,7 +7,7 @@ import {
   getSchemaPath
 } from '@nestjs/swagger'
 
-export const Response = <T extends Type<any>>(model: T, is_array = false) => {
+export const Response = <T extends Type>(model: T, is_array = false) => {
   return applyDecorators(
     ApiExtraModels(model),
     ApiOkResponse({
@@ -35,7 +35,7 @@ export const Response = <T extends Type<any>>(model: T, is_array = false) => {
   )
 }
 
-export const ApiArrayProperty = <T extends Type<any>>(
+export const ApiArrayProperty = <T extends Type>(
   model: T,
   options?: Omit<Omit<ApiPropertyOptions, 'type'>, 'isArray'>
 ) => {
