@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { AppModule } from '@src/app.module'
 import helmet from 'helmet'
 import * as cookieParser from 'cookie-parser'
 import { urlencoded } from 'express'
