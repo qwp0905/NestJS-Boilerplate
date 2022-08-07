@@ -25,6 +25,5 @@
   "prettier.configPath": ".prettierrc",
   "prettier.requireConfig": true,
   "javascript.preferences.useAliasesForRenames": true,
-  "typescript.preferences.useAliasesForRenames": true,
-  "typescript.preferences.importModuleSpecifierEnding": "minimal"
+  "typescript.preferences.useAliasesForRenames": true
 }
