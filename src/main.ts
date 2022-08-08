@@ -1,17 +1,14 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from '@src/app.module'
+import { AppModule } from '@app'
 import helmet from 'helmet'
 import * as cookieParser from 'cookie-parser'
 import { urlencoded } from 'express'
 import * as morgan from 'morgan'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
-import { BasicGuard } from '@guards/auth.guard'
-import {
-  ErrorFilter,
-  HttpExceptionFilter
-} from '@filters/http-exception.filter'
-import { HttpInterceptor } from '@interceptors/http.interceptor'
+import { BasicGuard } from '@guards'
+import { ErrorFilter, HttpExceptionFilter } from '@filters'
+import { HttpInterceptor } from '@interceptors'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

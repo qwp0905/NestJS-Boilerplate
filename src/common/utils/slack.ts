@@ -1,9 +1,5 @@
-import { SlackService } from '@slack/slack.service'
-import {
-  SlackFile,
-  SlackImage,
-  SlackMessageBuilder
-} from '@interfaces/slack.interface'
+import { SlackService } from '@slack'
+import { SlackFile, SlackImage, SlackMessageBuilder } from '@interfaces'
 
 export const MessageBuilder = (
   name: string,

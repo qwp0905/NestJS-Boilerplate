@@ -1,3 +1,5 @@
+export * from './cache.service'
+
 import {
   CacheModule as CModule,
   CacheModuleOptions,
@@ -6,7 +8,7 @@ import {
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientOptions, Transport } from '@nestjs/microservices'
 import * as redisStore from 'cache-manager-ioredis'
-import { CacheService } from '@cache/cache.service'
+import { CacheService } from '@cache'
 
 @Module({
   imports: [

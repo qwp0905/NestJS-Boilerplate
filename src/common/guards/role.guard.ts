@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Observable } from 'rxjs'
-import { AuthService } from '@auth/auth.service'
+import { AuthService } from '@auth'
 
 export class RoleGuard implements CanActivate {
   constructor(

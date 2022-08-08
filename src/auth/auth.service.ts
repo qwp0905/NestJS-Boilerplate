@@ -1,6 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { User } from '@models/mysql/user/user.entity'
-import { UserRepository } from '@models/mysql/user/user.repository'
+import { User, UserRepository } from '@models/mysql'
 
 @Injectable()
 export class AuthService {

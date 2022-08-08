@@ -1,5 +1,4 @@
-import { User } from '@models/mysql/user/user.entity'
-import { UserRepository } from '@models/mysql/user/user.repository'
+import { User, UserRepository } from '@models/mysql'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
