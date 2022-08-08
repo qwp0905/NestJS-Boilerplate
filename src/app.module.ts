@@ -1,10 +1,12 @@
+export * from './app.controller'
+
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { DatabaseModule } from '@database/database.module'
-import { configuration } from '@config/configuration'
-import { ApiModule } from '@api/api.module'
-import { AuthModule } from '@auth/auth.module'
-import { AppController } from '@src/app.controller'
+import { DatabaseModule } from '@database'
+import { configuration } from '@config'
+import { ApiModule } from '@api'
+import { AuthModule } from '@auth'
+import { AppController } from '@app'
 
 @Module({
   imports: [

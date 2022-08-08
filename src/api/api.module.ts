@@ -1,5 +1,11 @@
-import { ArticleModule } from '@api/articles/article.module'
-import { UsersModule } from '@api/users/users.module'
+export * from './articles/article.service'
+export * from './articles/article.controller'
+export * from './articles/article.module'
+export * from './users/users.service'
+export * from './users/users.controller'
+export * from './users/users.module'
+
+import { ArticleModule, UsersModule } from '@api'
 import { Module } from '@nestjs/common'
 
 @Module({

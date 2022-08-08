@@ -1,4 +1,4 @@
-import { User } from '@models/mysql/user/user.entity'
+import { User } from '@models/mysql'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'

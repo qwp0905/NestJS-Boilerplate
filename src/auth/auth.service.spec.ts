@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { UserRepository } from '@models/mysql/user/user.repository'
-import { Mock } from '@type/test.type'
-import { AuthService } from '@auth/auth.service'
+import { UserRepository } from '@models/mysql'
+import { Mock } from '@type'
+import { AuthService } from '@auth'
 
 const mockUserRepository = () => ({})
 

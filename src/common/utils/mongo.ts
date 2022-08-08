@@ -5,10 +5,7 @@ import {
   RegexOptions,
   UpdateQuery
 } from 'mongoose'
-import {
-  MongoQueryBuiler,
-  RootQuerySelector
-} from '@interfaces/query.interface'
+import { MongoQueryBuiler, RootQuerySelector } from '@interfaces'
 
 export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
   const query: FilterQuery<T> = {}

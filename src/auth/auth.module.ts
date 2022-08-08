@@ -1,10 +1,12 @@
+export * from './auth.service'
+export * from './strategies/basic.strategy'
+export * from './strategies/jwt.strategy'
+
 import { Module } from '@nestjs/common'
-import { BasicStrategy } from '@auth/strategies/basic.strategy'
-import { AuthService } from '@auth/auth.service'
-import { JwtStrategy } from '@auth/strategies/jwt.strategy'
+import { BasicStrategy, JwtStrategy, AuthService } from '@auth'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { UserTable } from '@models/mysql/user/user.repository.module'
+import { UserTable } from '@models/mysql'
 
 @Module({
   imports: [
