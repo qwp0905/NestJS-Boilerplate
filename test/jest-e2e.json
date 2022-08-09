@@ -11,6 +11,7 @@
     "^@app$": "<rootDir>/../src/app.module",
     "^@api$": "<rootDir>/../src/api/api.module",
     "^@auth$": "<rootDir>/../src/auth/auth.module",
+    "^@aws$": "<rootDir>/src/../aws/aws.module",
     "^@cache$": "<rootDir>/../src/cache/cache.module",
     "^@interfaces$": "<rootDir>/../src/common/interfaces/index",
     "^@utils$": "<rootDir>/../src/common/utils/index",

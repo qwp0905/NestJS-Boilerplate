@@ -13,6 +13,7 @@
     "baseUrl": "./",
     "paths": {
       "@api": ["src/api/api.module"],
+      "@aws": ["src/aws/aws.module"],
       "@auth": ["src/auth/auth.module"],
       "@cache": ["src/cache/cache.module"],
       "@interfaces": ["src/common/interfaces/index"],
