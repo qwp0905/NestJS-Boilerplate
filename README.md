@@ -28,7 +28,7 @@ $ npm ci
 Build
 
 ```
-$ npm
+$ npm run build
 ```
 
 Start
