@@ -12,6 +12,9 @@ export class Article {
   @Prop()
   writer_name: string
 
+  @Prop({ type: [String] })
+  logs: Array<string>
+
   @Prop()
   dt: Date
 }

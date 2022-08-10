@@ -1,3 +1,4 @@
+import { ArrayField } from '@type'
 import { FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
 
 export interface SqlQueryResult {
@@ -12,7 +13,7 @@ export interface SqlQueryResult {
 }
 
 export interface MongoQueryBuiler<T> {
-  add: (key: keyof T, value: any) => MongoQueryBuiler<T>
+  key: (key: keyof T, value: any) => MongoQueryBuiler<T>
   not: (key: keyof T, value: any) => MongoQueryBuiler<T>
   gt: (key: keyof T, value: any) => MongoQueryBuiler<T>
   gte: (key: keyof T, value: any) => MongoQueryBuiler<T>
@@ -35,7 +36,8 @@ export interface MongoQueryBuiler<T> {
 
 export interface MongoUpdateQueryBuilder<T> {
   set: (key: keyof T, value: any) => MongoUpdateQueryBuilder<T>
-  unset: (key: keyof T, value: any) => MongoUpdateQueryBuilder<T>
+  unset: (key: keyof T) => MongoUpdateQueryBuilder<T>
+  push: (key: ArrayField<T>, value: any) => MongoUpdateQueryBuilder<T>
   build: () => UpdateQuery<T>
 }
 

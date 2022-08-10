@@ -5,7 +5,12 @@ import {
   RegexOptions,
   UpdateQuery
 } from 'mongoose'
-import { MongoQueryBuiler, RootQuerySelector } from '@interfaces'
+import {
+  MongoQueryBuiler,
+  MongoUpdateQueryBuilder,
+  RootQuerySelector
+} from '@interfaces'
+import { ArrayField } from '@type'
 
 export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
   const query: FilterQuery<T> = {}
@@ -29,7 +34,7 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
     }
   }
   return {
-    add(key: keyof T, value: any) {
+    key(key: keyof T, value: any) {
       if (value === undefined) return this
       if (Array.isArray(value) && !value.length) return this
       query[key] = value
@@ -98,22 +103,36 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
   }
 }
 
-export const UpdateQueryBuilder = <T = any>() => {
+export const UpdateQueryBuilder = <T = any>(): MongoUpdateQueryBuilder<T> => {
   const query: UpdateQuery<T> = {}
   return {
     set(key: keyof T, value: any) {
       if (
         value === undefined ||
         (typeof value === 'object' && !Object.keys(value).length)
-      )
+      ) {
         return this
+      }
       if (!query.$set) query.$set = {}
       query.$set[key] = value
       return this
     },
     unset(key: keyof T) {
-      if (!query.$unset) query.$unset = []
-      query.$unset.push(key)
+      if (!query.$unset) query.$unset = {}
+      query.$unset = { ...query.$unset, [key]: 1 }
+      return this
+    },
+    push(key: ArrayField<T>, value: any) {
+      if (
+        value === undefined ||
+        (typeof value === 'object' && !Object.keys(value).length)
+      ) {
+        return this
+      }
+      if (!query.$push) {
+        query.$push = {}
+      }
+      query.$push = { ...query.$push, [key]: value }
       return this
     },
     build() {
