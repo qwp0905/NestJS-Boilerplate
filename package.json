@@ -114,8 +114,8 @@
       "^@app$": "<rootDir>/app.module",
       "^@api$": "<rootDir>/api/api.module",
       "^@auth$": "<rootDir>/auth/auth.module",
-      "^@aws$": "<rootDir>/aws/aws.module",
-      "^@cache$": "<rootDir>/cache/cache.module",
+      "^@aws$": "<rootDir>/external/aws/aws.module",
+      "^@cache$": "<rootDir>/external/cache/cache.module",
       "^@interfaces$": "<rootDir>/common/interfaces/index",
       "^@utils$": "<rootDir>/common/utils/index",
       "^@decorators$": "<rootDir>/common/decorators/index",
@@ -127,9 +127,9 @@
       "^@config$": "<rootDir>/config/configuration",
       "^@database$": "<rootDir>/database/database.module",
       "^@models/(.*)$": "<rootDir>/models/$1/index",
-      "^@rabbitmq$": "<rootDir>/rabbitmq/rabbitmq.module",
-      "^@redis$": "<rootDir>/redis/redis.module",
-      "^@slack$": "<rootDir>/slack/slack.module"
+      "^@rabbitmq$": "<rootDir>/external/rabbitmq/rabbitmq.module",
+      "^@redis$": "<rootDir>/external/redis/redis.module",
+      "^@slack$": "<rootDir>/external/slack/slack.module"
     }
   },
   "lint-staged": {

@@ -8,13 +8,18 @@ import {
 import {
   MongoQueryBuiler,
   MongoUpdateQueryBuilder,
+  PushQuery,
   RootQuerySelector
 } from '@interfaces'
-import { ArrayField } from '@type'
+import { ArrayKeys } from '@type'
 
-export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
+export const QueryBuilder = <T>(): MongoQueryBuiler<T> => {
   const query: FilterQuery<T> = {}
-  const setKey = (key: keyof T, tag: keyof QuerySelector<T>, value: any) => {
+  const setKey = <K extends keyof T>(
+    key: K,
+    tag: keyof QuerySelector<T[K]>,
+    value: any
+  ) => {
     if (value === undefined) return
     if (Array.isArray(value) && !value.length) return
     const condition: Condition<T> = {}
@@ -34,29 +39,32 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
     }
   }
   return {
-    key(key: keyof T, value: any) {
+    add<M extends keyof T>(key: M, value: T[M] | undefined) {
       if (value === undefined) return this
       if (Array.isArray(value) && !value.length) return this
       query[key] = value
       return this
     },
-    not(key: keyof T, value: any) {
+    not<M extends keyof T>(
+      key: M,
+      value: (T[M] extends string ? T[M] | RegExp : T[M]) | undefined
+    ) {
       setKey(key, '$not', value)
       return this
     },
-    gt(key: keyof T, value: any) {
+    gt<M extends keyof T>(key: M, value: T[M] | undefined) {
       setKey(key, '$gt', value)
       return this
     },
-    gte(key: keyof T, value: any) {
+    gte<M extends keyof T>(key: M, value: T[M] | undefined) {
       setKey(key, '$gte', value)
       return this
     },
-    lt(key: keyof T, value: any) {
+    lt<M extends keyof T>(key: M, value: T[M] | undefined) {
       setKey(key, '$lt', value)
       return this
     },
-    lte(key: keyof T, value: any) {
+    lte<M extends keyof T>(key: M, value: T[M] | undefined) {
       setKey(key, '$lte', value)
       return this
     },
@@ -73,27 +81,42 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
       if (options) setKey(key, '$options', options)
       return this
     },
-    in(key: keyof T, value: Array<any> | undefined) {
+    in<M extends keyof T>(key: M, value: Array<T[M]> | undefined) {
       setKey(key, '$in', value)
       return this
     },
-    ne(key: keyof T, value: any | undefined) {
+    ne<M extends keyof T>(key: M, value: T[M] | undefined) {
       setKey(key, '$ne', value)
       return this
     },
-    nin(key: keyof T, value: Array<any> | undefined) {
+    nin<M extends keyof T>(key: M, value: Array<T[M]> | undefined) {
       setKey(key, '$nin', value)
       return this
     },
-    or(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    or(
+      conditions:
+        | { [P in keyof T]?: T[P] }
+        | Array<{ [P in keyof T]?: T[P] }>
+        | undefined
+    ) {
       setCondition('$or', conditions)
       return this
     },
-    and(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    and(
+      conditions:
+        | { [P in keyof T]?: T[P] }
+        | Array<{ [P in keyof T]?: T[P] }>
+        | undefined
+    ) {
       setCondition('$and', conditions)
       return this
     },
-    nor(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    nor(
+      conditions:
+        | { [P in keyof T]?: T[P] }
+        | Array<{ [P in keyof T]?: T[P] }>
+        | undefined
+    ) {
       setCondition('$nor', conditions)
       return this
     },
@@ -103,10 +126,10 @@ export const QueryBuilders = <T = any>(): MongoQueryBuiler<T> => {
   }
 }
 
-export const UpdateQueryBuilder = <T = any>(): MongoUpdateQueryBuilder<T> => {
+export const UpdateQueryBuilder = <T>(): MongoUpdateQueryBuilder<T> => {
   const query: UpdateQuery<T> = {}
   return {
-    set(key: keyof T, value: any) {
+    set<M extends keyof Omit<T, '_id'>>(key: M, value: T[M]) {
       if (
         value === undefined ||
         (typeof value === 'object' && !Object.keys(value).length)
@@ -117,21 +140,16 @@ export const UpdateQueryBuilder = <T = any>(): MongoUpdateQueryBuilder<T> => {
       query.$set[key] = value
       return this
     },
-    unset(key: keyof T) {
+    unset<M extends keyof Omit<T, '_id'>>(key: M) {
       if (!query.$unset) query.$unset = {}
       query.$unset = { ...query.$unset, [key]: 1 }
       return this
     },
-    push(key: ArrayField<T>, value: any) {
-      if (
-        value === undefined ||
-        (typeof value === 'object' && !Object.keys(value).length)
-      ) {
-        return this
-      }
-      if (!query.$push) {
-        query.$push = {}
-      }
+    push<M extends ArrayKeys<T>>(
+      key: M,
+      value: T[M] extends Array<infer U> ? U | PushQuery<U> : never
+    ) {
+      if (!query.$push) query.$push = {}
       query.$push = { ...query.$push, [key]: value }
       return this
     },
