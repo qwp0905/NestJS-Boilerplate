@@ -3,7 +3,7 @@ export * from './rabbitmq.service'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, RmqOptions, Transport } from '@nestjs/microservices'
-import { RabbitmqService } from 'src/external/rabbitmq/rabbitmq.module'
+import { RabbitmqService } from '@rabbitmq'
 
 @Module({
   imports: [

@@ -1,7 +1,7 @@
 export * from './aws.service'
 
 import { Module } from '@nestjs/common'
-import { AwsService } from 'src/external/aws/aws.module'
+import { AwsService } from '@aws'
 import { ConfigService } from '@nestjs/config'
 import { S3 } from 'aws-sdk'
 

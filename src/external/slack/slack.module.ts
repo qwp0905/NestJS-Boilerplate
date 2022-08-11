@@ -3,7 +3,7 @@ export * from './slack.service'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { WebClient } from '@slack/web-api'
-import { SlackService } from 'src/external/slack/slack.module'
+import { SlackService } from '@slack'
 
 @Module({
   providers: [

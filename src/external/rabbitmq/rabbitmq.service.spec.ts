@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
-import { RabbitmqService } from 'src/external/rabbitmq/rabbitmq.module'
+import { RabbitmqService } from '@rabbitmq'
 
 describe('RabbitmqService', () => {
   let service: RabbitmqService
