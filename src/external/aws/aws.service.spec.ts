@@ -1,4 +1,4 @@
-import { AwsService } from '@aws'
+import { AwsService } from 'src/external/aws/aws.module'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Mock } from '@type'
 import { S3 } from 'aws-sdk'

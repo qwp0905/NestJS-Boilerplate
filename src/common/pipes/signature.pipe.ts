@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@nestjs/common'
-import { RedisService } from '@redis'
+import { RedisService } from 'src/external/redis/redis.module'
 
 @Injectable()
 export class SignaturePipe implements PipeTransform {

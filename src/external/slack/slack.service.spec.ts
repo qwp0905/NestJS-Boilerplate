@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { SlackService } from '@slack'
+import { SlackService } from 'src/external/slack/slack.module'
 import { WebClient } from '@slack/web-api'
 import { Mock } from '@type'
 
