@@ -11,8 +11,8 @@
     "^@app$": "<rootDir>/../src/app.module",
     "^@api$": "<rootDir>/../src/api/api.module",
     "^@auth$": "<rootDir>/../src/auth/auth.module",
-    "^@aws$": "<rootDir>/src/../aws/aws.module",
-    "^@cache$": "<rootDir>/../src/cache/cache.module",
+    "^@aws$": "<rootDir>/src/external/../aws/aws.module",
+    "^@cache$": "<rootDir>/../src/external/cache/cache.module",
     "^@interfaces$": "<rootDir>/../src/common/interfaces/index",
     "^@utils$": "<rootDir>/../src/common/utils/index",
     "^@decorators$": "<rootDir>/../src/common/decorators/index",
@@ -24,8 +24,8 @@
     "^@config$": "<rootDir>/../src/config/configuration",
     "^@database$": "<rootDir>/../src/database/database.module",
     "^@models/(.*)$": "<rootDir>/../src/models/$1/index",
-    "^@rabbitmq$": "<rootDir>/../src/rabbitmq/rabbitmq.module",
-    "^@redis$": "<rootDir>/../src/redis/redis.module",
-    "^@slack$": "<rootDir>/../src/slack/slack.module"
+    "^@rabbitmq$": "<rootDir>/../src/external/rabbitmq/rabbitmq.module",
+    "^@redis$": "<rootDir>/../src/external/redis/redis.module",
+    "^@slack$": "<rootDir>/../src/external/slack/slack.module"
   }
 }
