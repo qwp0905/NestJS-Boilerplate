@@ -93,30 +93,15 @@ export const QueryBuilder = <T>(): MongoQueryBuiler<T> => {
       setKey(key, '$nin', value)
       return this
     },
-    or(
-      conditions:
-        | { [P in keyof T]?: T[P] }
-        | Array<{ [P in keyof T]?: T[P] }>
-        | undefined
-    ) {
+    or(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
       setCondition('$or', conditions)
       return this
     },
-    and(
-      conditions:
-        | { [P in keyof T]?: T[P] }
-        | Array<{ [P in keyof T]?: T[P] }>
-        | undefined
-    ) {
+    and(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
       setCondition('$and', conditions)
       return this
     },
-    nor(
-      conditions:
-        | { [P in keyof T]?: T[P] }
-        | Array<{ [P in keyof T]?: T[P] }>
-        | undefined
-    ) {
+    nor(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
       setCondition('$nor', conditions)
       return this
     },

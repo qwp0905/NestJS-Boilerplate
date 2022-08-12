@@ -56,22 +56,13 @@ export interface MongoQueryBuiler<T> {
     value: Array<T[M]> | undefined
   ) => MongoQueryBuiler<T>
   or: (
-    conditions:
-      | { [P in keyof T]?: T[P] }
-      | Array<{ [P in keyof T]?: T[P] }>
-      | undefined
+    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
   ) => MongoQueryBuiler<T>
   and: (
-    conditions:
-      | { [P in keyof T]?: T[P] }
-      | Array<{ [P in keyof T]?: T[P] }>
-      | undefined
+    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
   ) => MongoQueryBuiler<T>
   nor: (
-    conditions:
-      | { [P in keyof T]?: T[P] }
-      | Array<{ [P in keyof T]?: T[P] }>
-      | undefined
+    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
   ) => MongoQueryBuiler<T>
   build: () => FilterQuery<T>
 }
