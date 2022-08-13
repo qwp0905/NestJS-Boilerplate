@@ -1,7 +1,7 @@
 import { ArrayKeys } from '@type'
 import { FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
 
-export interface QueryResult {
+export interface SqlQueryResult {
   fieldCount: number
   affectedRows: number
   insertId: number
