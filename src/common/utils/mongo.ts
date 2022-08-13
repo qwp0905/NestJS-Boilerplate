@@ -130,7 +130,7 @@ export const UpdateQueryBuilder = <T>(): MongoUpdateQueryBuilder<T> => {
       query.$unset = { ...query.$unset, [key]: 1 }
       return this
     },
-    push<M extends ArrayKeys<T>>(
+    push<M extends ArrayKeys<Omit<T, '_id'>>>(
       key: M,
       value: T[M] extends Array<infer U> ? U | PushQuery<U> : never
     ) {

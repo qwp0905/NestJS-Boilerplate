@@ -25,5 +25,6 @@
   "prettier.configPath": ".prettierrc",
   "prettier.requireConfig": true,
   "javascript.preferences.useAliasesForRenames": true,
-  "typescript.preferences.useAliasesForRenames": true
+  "typescript.preferences.useAliasesForRenames": true,
+  "auto-rename-tag.activationOnLanguage": ["*"]
 }
