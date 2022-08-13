@@ -6,14 +6,14 @@ import {
   UpdateQuery
 } from 'mongoose'
 import {
-  MongoQueryBuiler,
-  MongoUpdateQueryBuilder,
-  PushQuery,
-  RootQuerySelector
+  IMongoQueryBuiler,
+  IMongoUpdateQueryBuilder,
+  IPushQuery,
+  IRootQuerySelector
 } from '@interfaces'
 import { ArrayKeys } from '@type'
 
-export const QueryBuilder = <T>(): MongoQueryBuiler<T> => {
+export const QueryBuilder = <T>(): IMongoQueryBuiler<T> => {
   const query: FilterQuery<T> = {}
   const setKey = <K extends keyof T>(
     key: K,
@@ -27,7 +27,7 @@ export const QueryBuilder = <T>(): MongoQueryBuiler<T> => {
     query[key][tag] = value
   }
   const setCondition = (
-    tag: keyof RootQuerySelector<T>,
+    tag: keyof IRootQuerySelector<T>,
     condition: FilterQuery<T> | Array<FilterQuery<T>>
   ) => {
     if (!condition || !Object.keys(condition).length) return
@@ -111,7 +111,7 @@ export const QueryBuilder = <T>(): MongoQueryBuiler<T> => {
   }
 }
 
-export const UpdateQueryBuilder = <T>(): MongoUpdateQueryBuilder<T> => {
+export const UpdateQueryBuilder = <T>(): IMongoUpdateQueryBuilder<T> => {
   const query: UpdateQuery<T> = {}
   return {
     set<M extends keyof Omit<T, '_id'>>(key: M, value: T[M]) {
@@ -132,7 +132,7 @@ export const UpdateQueryBuilder = <T>(): MongoUpdateQueryBuilder<T> => {
     },
     push<M extends ArrayKeys<Omit<T, '_id'>>>(
       key: M,
-      value: T[M] extends Array<infer U> ? U | PushQuery<U> : never
+      value: T[M] extends Array<infer U> ? U | IPushQuery<U> : never
     ) {
       if (!query.$push) query.$push = {}
       query.$push = { ...query.$push, [key]: value }

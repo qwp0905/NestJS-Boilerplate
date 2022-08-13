@@ -16,7 +16,7 @@ export class Article {
   logs: Array<string>
 
   @Prop()
-  dt: Date
+  _dt: string
 }
 
 export type ArticleDocument = Article & Document

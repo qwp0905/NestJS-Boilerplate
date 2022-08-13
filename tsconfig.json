@@ -17,6 +17,7 @@
       "@auth": ["src/auth/auth.module"],
       "@cache": ["src/external/cache/cache.module"],
       "@interfaces": ["src/common/interfaces/index"],
+      "@event": ["src/common/event/event.module"],
       "@utils": ["src/common/utils/index"],
       "@decorators": ["src/common/decorators/index"],
       "@filters": ["src/common/filters/index"],

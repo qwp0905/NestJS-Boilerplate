@@ -1,13 +1,10 @@
+import { ISignature } from '@interfaces'
+
 export type Diff<T> = {
   [P in Exclude<keyof T, '_diff'>]?: DiffData<T[P]>
 } & {
-  _ts: number
-  _dt: string
   _bef_dt: string
-  _name: string
-  _uid: string
-  _at: string
-}
+} & ISignature
 
 export type DiffData<T> =
   | { [P in DiffType]?: T }
