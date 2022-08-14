@@ -1,20 +1,22 @@
 import {
   Condition,
+  Document,
   FilterQuery,
   QuerySelector,
-  RegexOptions,
   UpdateQuery
 } from 'mongoose'
 import {
-  IMongoQueryBuiler,
-  IMongoUpdateQueryBuilder,
-  IPushQuery,
-  IRootQuerySelector
+  IQueryBuiler,
+  IUpdateQueryBuilder,
+  IRootQuerySelector,
+  IReplaceOneOption,
+  IBulkBuilder
 } from '@interfaces'
-import { ArrayKeys } from '@type'
+import { Bulk } from '@type'
 
-export const QueryBuilder = <T>(): IMongoQueryBuiler<T> => {
+export const QueryBuilder = <T>(): IQueryBuiler<T> => {
   const query: FilterQuery<T> = {}
+
   const setKey = <K extends keyof T>(
     key: K,
     tag: keyof QuerySelector<T[K]>,
@@ -26,6 +28,7 @@ export const QueryBuilder = <T>(): IMongoQueryBuiler<T> => {
     if (!query[key]) query[key] = condition
     query[key][tag] = value
   }
+
   const setCondition = (
     tag: keyof IRootQuerySelector<T>,
     condition: FilterQuery<T> | Array<FilterQuery<T>>
@@ -39,69 +42,62 @@ export const QueryBuilder = <T>(): IMongoQueryBuiler<T> => {
     }
   }
   return {
-    add<M extends keyof T>(key: M, value: T[M] | undefined) {
+    add(key, value) {
       if (value === undefined) return this
       if (Array.isArray(value) && !value.length) return this
       query[key] = value
       return this
     },
-    not<M extends keyof T>(
-      key: M,
-      value: (T[M] extends string ? T[M] | RegExp : T[M]) | undefined
-    ) {
+    not(key, value) {
       setKey(key, '$not', value)
       return this
     },
-    gt<M extends keyof T>(key: M, value: T[M] | undefined) {
+    gt(key, value) {
       setKey(key, '$gt', value)
       return this
     },
-    gte<M extends keyof T>(key: M, value: T[M] | undefined) {
+    gte(key, value) {
       setKey(key, '$gte', value)
       return this
     },
-    lt<M extends keyof T>(key: M, value: T[M] | undefined) {
+    lt(key, value) {
       setKey(key, '$lt', value)
       return this
     },
-    lte<M extends keyof T>(key: M, value: T[M] | undefined) {
+    lte(key, value) {
       setKey(key, '$lte', value)
       return this
     },
-    exists(key: keyof T, value: boolean | undefined) {
+    exists(key, value) {
       setKey(key, '$exists', value)
       return this
     },
-    regex(
-      key: keyof T,
-      pattern: RegExp | undefined,
-      options?: RegexOptions | undefined
-    ) {
+    regex(key, pattern, options) {
       setKey(key, '$regex', pattern)
       if (options) setKey(key, '$options', options)
       return this
     },
-    in<M extends keyof T>(key: M, value: Array<T[M]> | undefined) {
+    in(key, value) {
       setKey(key, '$in', value)
       return this
     },
-    ne<M extends keyof T>(key: M, value: T[M] | undefined) {
+    ne(key, value) {
       setKey(key, '$ne', value)
       return this
     },
-    nin<M extends keyof T>(key: M, value: Array<T[M]> | undefined) {
+    nin(key, value) {
       setKey(key, '$nin', value)
       return this
     },
-    or(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    or(conditions) {
       setCondition('$or', conditions)
       return this
     },
-    and(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    and(conditions) {
       setCondition('$and', conditions)
       return this
     },
-    nor(conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined) {
+    nor(conditions) {
       setCondition('$nor', conditions)
       return this
     },
@@ -111,10 +107,10 @@ export const QueryBuilder = <T>(): IMongoQueryBuiler<T> => {
   }
 }
 
-export const UpdateQueryBuilder = <T>(): IMongoUpdateQueryBuilder<T> => {
+export const UpdateQueryBuilder = <T>(): IUpdateQueryBuilder<T> => {
   const query: UpdateQuery<T> = {}
   return {
-    set<M extends keyof Omit<T, '_id'>>(key: M, value: T[M]) {
+    set(key, value) {
       if (
         value === undefined ||
         (typeof value === 'object' && !Object.keys(value).length)
@@ -125,21 +121,51 @@ export const UpdateQueryBuilder = <T>(): IMongoUpdateQueryBuilder<T> => {
       query.$set[key] = value
       return this
     },
-    unset<M extends keyof Omit<T, '_id'>>(key: M) {
+    unset(key) {
       if (!query.$unset) query.$unset = {}
       query.$unset = { ...query.$unset, [key]: 1 }
       return this
     },
-    push<M extends ArrayKeys<Omit<T, '_id'>>>(
-      key: M,
-      value: T[M] extends Array<infer U> ? U | IPushQuery<U> : never
-    ) {
+    push(key, value) {
       if (!query.$push) query.$push = {}
       query.$push = { ...query.$push, [key]: value }
       return this
     },
     build() {
       return query
+    }
+  }
+}
+
+export const BulkBuilder = <T extends Document>(): IBulkBuilder<T> => {
+  const bulk: Bulk<T>[] = []
+  return {
+    insertOne(document: T) {
+      bulk.push({ insertOne: { document } })
+      return this
+    },
+    replaceOne(options: IReplaceOneOption<T>) {
+      bulk.push({ replaceOne: options })
+      return this
+    },
+    updateOne(options) {
+      bulk.push({ updateOne: options })
+      return this
+    },
+    updateMany(options) {
+      bulk.push({ updateMany: options })
+      return this
+    },
+    deleteOne(options) {
+      bulk.push({ deleteOne: options })
+      return this
+    },
+    deleteMany(options) {
+      bulk.push({ deleteMany: options })
+      return this
+    },
+    build() {
+      return bulk
     }
   }
 }

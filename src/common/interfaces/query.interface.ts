@@ -1,5 +1,6 @@
-import { ArrayKeys } from '@type'
-import { FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
+import { ArrayKeys, Bulk, StringKeys } from '@type'
+import { Document, FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
+import { CollationDocument } from 'typeorm'
 
 export interface ISqlQueryResult {
   fieldCount: number
@@ -12,71 +13,41 @@ export interface ISqlQueryResult {
   changedRows: number
 }
 
-export interface IMongoQueryBuiler<T> {
-  add: <M extends keyof T>(
-    key: M,
-    value: T[M] | undefined
-  ) => IMongoQueryBuiler<T>
+export interface IQueryBuiler<T> {
+  add: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
   not: <M extends keyof T>(
     key: M,
-    value: (T[M] extends string ? T[M] | RegExp : T[M]) | undefined
-  ) => IMongoQueryBuiler<T>
-  gt: <M extends keyof T>(
+    value?: T[M] extends string ? T[M] | RegExp : T[M]
+  ) => IQueryBuiler<T>
+  gt: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
+  gte: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
+  lt: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
+  lte: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
+  exists: <M extends keyof T>(key: M, value?: boolean) => IQueryBuiler<T>
+  regex: <M extends StringKeys<T>>(
     key: M,
-    value: T[M] | undefined
-  ) => IMongoQueryBuiler<T>
-  gte: <M extends keyof T>(
-    key: M,
-    value: T[M] | undefined
-  ) => IMongoQueryBuiler<T>
-  lt: <M extends keyof T>(
-    key: M,
-    value: T[M] | undefined
-  ) => IMongoQueryBuiler<T>
-  lte: <M extends keyof T>(
-    key: M,
-    value: T[M] | undefined
-  ) => IMongoQueryBuiler<T>
-  exists: <M extends keyof T>(
-    key: M,
-    value: boolean | undefined
-  ) => IMongoQueryBuiler<T>
-  regex: <M extends keyof T>(
-    key: M,
-    pattern: RegExp | undefined,
-    options?: RegexOptions | undefined
-  ) => IMongoQueryBuiler<T>
-  in: <M extends keyof T>(
-    key: M,
-    value: Array<T[M]> | undefined
-  ) => IMongoQueryBuiler<T>
-  ne: <M extends keyof T>(key: M, value: T[M]) => IMongoQueryBuiler<T>
-  nin: <M extends keyof T>(
-    key: M,
-    value: Array<T[M]> | undefined
-  ) => IMongoQueryBuiler<T>
-  or: (
-    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
-  ) => IMongoQueryBuiler<T>
-  and: (
-    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
-  ) => IMongoQueryBuiler<T>
-  nor: (
-    conditions: FilterQuery<T> | Array<FilterQuery<T>> | undefined
-  ) => IMongoQueryBuiler<T>
+    pattern?: RegExp,
+    options?: RegexOptions
+  ) => IQueryBuiler<T>
+  in: <M extends keyof T>(key: M, value?: Array<T[M]>) => IQueryBuiler<T>
+  ne: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
+  nin: <M extends keyof T>(key: M, value?: Array<T[M]>) => IQueryBuiler<T>
+  or: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
+  and: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
+  nor: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
   build: () => FilterQuery<T>
 }
 
-export interface IMongoUpdateQueryBuilder<T> {
+export interface IUpdateQueryBuilder<T> {
   set: <M extends keyof Omit<T, '_id'>>(
     key: M,
-    value: T[M] | undefined
-  ) => IMongoUpdateQueryBuilder<T>
-  unset: <M extends keyof Omit<T, '_id'>>(key: M) => IMongoUpdateQueryBuilder<T>
+    value?: T[M]
+  ) => IUpdateQueryBuilder<T>
+  unset: <M extends keyof Omit<T, '_id'>>(key: M) => IUpdateQueryBuilder<T>
   push: <M extends ArrayKeys<Omit<T, '_id'>>>(
     key: M,
-    value: (T[M] extends Array<infer U> ? U | IPushQuery<U> : never) | undefined
-  ) => IMongoUpdateQueryBuilder<T>
+    value?: T[M] extends Array<infer U> ? U | IPushQuery<U> : never
+  ) => IUpdateQueryBuilder<T>
   build: () => UpdateQuery<T>
 }
 
@@ -89,4 +60,56 @@ export interface IRootQuerySelector<T> {
 export interface IPushQuery<T> {
   $slice?: number
   $each: Array<T>
+}
+
+export interface IInsertOneOption<T> {
+  document: T
+}
+
+export interface IReplaceOneOption<T> {
+  filter: FilterQuery<T>
+  replacement: Omit<T, '_id'>
+  collation?: CollationDocument
+  hint?: string | Document
+  upsert?: boolean
+}
+
+export interface IUpdateOneOption<T> {
+  filter: FilterQuery<T>
+  update: UpdateQuery<T> | UpdateQuery<T>[]
+  upsert?: boolean
+  collation?: CollationDocument
+  arrayFilters?: Document[]
+  hint?: string | Document
+}
+
+export interface IUpdateManyOption<T> {
+  filter: FilterQuery<T>
+  update: UpdateQuery<T> | UpdateQuery<T>[]
+  arrayFilters?: Document[]
+  collation?: CollationDocument
+  hint?: string | Document
+  upsert?: boolean
+}
+
+export interface IDeleteOneOption<T> {
+  filter: FilterQuery<T>
+  collation?: CollationDocument
+  hint?: string | Document
+}
+
+export interface IDeleteManyOption<T> {
+  filter: FilterQuery<T>
+  collation?: CollationDocument
+  hint?: string | Document
+}
+
+export interface IBulkBuilder<T extends Document> {
+  insertOne: (document: T) => IBulkBuilder<T>
+  replaceOne: (options: IReplaceOneOption<T>) => IBulkBuilder<T>
+  updateOne: (options: IUpdateOneOption<T>) => IBulkBuilder<T>
+  updateMany: (options: IUpdateManyOption<T>) => IBulkBuilder<T>
+  deleteOne: (options: IDeleteOneOption<T>) => IBulkBuilder<T>
+  deleteMany: (options: IDeleteManyOption<T>) => IBulkBuilder<T>
+  build: () => Bulk<T>[]
 }
