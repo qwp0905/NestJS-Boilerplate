@@ -9,8 +9,6 @@ import { AuthModule } from '@auth'
 import { AppController } from '@app'
 import { AwsModule } from '@aws'
 import { RabbitmqModule } from '@rabbitmq'
-import { RedisModule } from '@redis'
-import { SlackModule } from '@slack'
 
 @Module({
   imports: [
@@ -19,9 +17,7 @@ import { SlackModule } from '@slack'
     ApiModule,
     AuthModule,
     AwsModule.forRoot(),
-    RabbitmqModule,
-    RedisModule.forRoot(),
-    SlackModule.forRoot()
+    RabbitmqModule
   ],
   controllers: [AppController]
 })

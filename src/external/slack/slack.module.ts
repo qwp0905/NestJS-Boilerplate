@@ -1,23 +1,21 @@
-export * from './slack.provider'
 export * from './slack.service'
 
-import { DynamicModule, Module } from '@nestjs/common'
-import { SlackRootProvider, SlackFeatureProvider, SlackService } from '@slack'
+import { Module } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { SlackService } from '@slack'
+import { WebClient } from '@slack/web-api'
 
-@Module({})
-export class SlackModule {
-  static forRoot(): DynamicModule {
-    return {
-      module: SlackModule,
-      providers: [SlackRootProvider]
-    }
-  }
-
-  static forFeature(): DynamicModule {
-    return {
-      module: SlackModule,
-      providers: [SlackService, SlackFeatureProvider],
-      exports: [SlackService]
-    }
-  }
-}
+@Module({
+  providers: [
+    {
+      provide: 'Slack',
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return new WebClient(configService.get<string>('SLACK_API_TOKEN'))
+      }
+    },
+    SlackService
+  ],
+  exports: [SlackService]
+})
+export class SlackModule {}

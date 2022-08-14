@@ -17,7 +17,6 @@ export const AwsRootProvider: Provider = {
       }
     })
     s3 = new S3()
-    return s3
   }
 }
 
