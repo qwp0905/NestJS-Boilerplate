@@ -1,4 +1,4 @@
-import { ArrayKeys, Bulk, StringKeys } from '@type'
+import { Bulk, MongoKey, MongoValue } from '@type'
 import { Document, FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
 import { CollationDocument } from 'typeorm'
 
@@ -14,24 +14,50 @@ export interface ISqlQueryResult {
 }
 
 export interface IQueryBuiler<T> {
-  add: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  not: <M extends keyof T>(
+  add: <M extends MongoKey<T>>(
     key: M,
-    value?: T[M] extends string ? T[M] | RegExp : T[M]
+    value?: MongoValue<T, M>
   ) => IQueryBuiler<T>
-  gt: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  gte: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  lt: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  lte: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  exists: <M extends keyof T>(key: M, value?: boolean) => IQueryBuiler<T>
-  regex: <M extends StringKeys<T>>(
+  not: <M extends MongoKey<T>>(
     key: M,
+    value?: MongoValue<T, M> extends string
+      ? MongoValue<T, M> | RegExp
+      : MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  gt: <M extends MongoKey<T>>(
+    key: M,
+    value?: MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  gte: <M extends MongoKey<T>>(
+    key: M,
+    value?: MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  lt: <M extends MongoKey<T>>(
+    key: M,
+    value?: MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  lte: <M extends MongoKey<T>>(
+    key: M,
+    value?: MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  exists: <M extends MongoKey<T>>(key: M, value?: boolean) => IQueryBuiler<T>
+  regex: <M extends MongoKey<T>>(
+    key: MongoValue<T, M> extends string ? M : never,
     pattern?: RegExp,
     options?: RegexOptions
   ) => IQueryBuiler<T>
-  in: <M extends keyof T>(key: M, value?: Array<T[M]>) => IQueryBuiler<T>
-  ne: <M extends keyof T>(key: M, value?: T[M]) => IQueryBuiler<T>
-  nin: <M extends keyof T>(key: M, value?: Array<T[M]>) => IQueryBuiler<T>
+  in: <M extends MongoKey<T>>(
+    key: M,
+    value?: Array<MongoValue<T, M>>
+  ) => IQueryBuiler<T>
+  ne: <M extends MongoKey<T>>(
+    key: M,
+    value?: MongoValue<T, M>
+  ) => IQueryBuiler<T>
+  nin: <M extends MongoKey<T>>(
+    key: M,
+    value?: Array<MongoValue<T, M>>
+  ) => IQueryBuiler<T>
   or: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
   and: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
   nor: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
@@ -39,14 +65,16 @@ export interface IQueryBuiler<T> {
 }
 
 export interface IUpdateQueryBuilder<T> {
-  set: <M extends keyof Omit<T, '_id'>>(
+  set: <M extends MongoKey<Omit<T, '_id'>>>(
     key: M,
-    value?: T[M]
+    value?: MongoValue<Omit<T, '_id'>, M>
   ) => IUpdateQueryBuilder<T>
-  unset: <M extends keyof Omit<T, '_id'>>(key: M) => IUpdateQueryBuilder<T>
-  push: <M extends ArrayKeys<Omit<T, '_id'>>>(
+  unset: <M extends MongoKey<Omit<T, '_id'>>>(key: M) => IUpdateQueryBuilder<T>
+  push: <M extends MongoKey<Omit<T, '_id'>>>(
     key: M,
-    value?: T[M] extends Array<infer U> ? U | IPushQuery<U> : never
+    value?: MongoValue<Omit<T, '_id'>, M> extends Array<infer U>
+      ? U | IPushQuery<U>
+      : never
   ) => IUpdateQueryBuilder<T>
   build: () => UpdateQuery<T>
 }
