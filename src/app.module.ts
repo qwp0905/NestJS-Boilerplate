@@ -7,7 +7,6 @@ import { configuration } from '@config'
 import { ApiModule } from '@api'
 import { AuthModule } from '@auth'
 import { AppController } from '@app'
-import { AwsModule } from '@aws'
 import { RabbitmqModule } from '@rabbitmq'
 
 @Module({
@@ -16,7 +15,6 @@ import { RabbitmqModule } from '@rabbitmq'
     DatabaseModule,
     ApiModule,
     AuthModule,
-    AwsModule.forRoot(),
     RabbitmqModule
   ],
   controllers: [AppController]
