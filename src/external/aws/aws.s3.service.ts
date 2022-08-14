@@ -4,8 +4,8 @@ import { readFile } from 'fs'
 import { promisify } from 'util'
 
 @Injectable()
-export class AwsService {
-  constructor(@Inject('AWS-S3') private readonly s3: S3) {}
+export class AwsS3Service {
+  constructor(@Inject('S3') private readonly s3: S3) {}
 
   async createObjectS3(
     path: string,
