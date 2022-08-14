@@ -2,7 +2,7 @@ import { IMongoDB, ISignature } from '@interfaces'
 import { Injectable } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { FilterQuery } from 'mongoose'
-import { TestEvent } from '@event'
+import { SignatureEvent } from '@event'
 
 @Injectable()
 export class EventRegisterService {
@@ -14,7 +14,7 @@ export class EventRegisterService {
     previous: IMongoDB[T],
     signature: ISignature
   ) {
-    const event = new TestEvent<IMongoDB, T>()
+    const event = new SignatureEvent<IMongoDB, T>()
     event.collection = collection
     event.filter_query = filter_query
     event.previous = previous

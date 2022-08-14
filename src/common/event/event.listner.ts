@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
-import { TestEvent } from '@event'
+import { SignatureEvent } from '@event'
 import { MongoService } from '@models/mongo'
 import { IMongoDB } from '@interfaces'
 
@@ -8,7 +8,7 @@ import { IMongoDB } from '@interfaces'
 export class EventListener {
   constructor(private readonly mongoService: MongoService) {}
   @OnEvent('diff')
-  async testEvent(payload: TestEvent<IMongoDB, keyof IMongoDB>) {
+  async testEvent(payload: SignatureEvent<IMongoDB, keyof IMongoDB>) {
     await this.mongoService.updateDiff(
       payload.collection,
       payload.filter_query,

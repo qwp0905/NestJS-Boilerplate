@@ -1,4 +1,4 @@
-import { AwsService } from '@aws'
+import { AwsS3Service } from '@aws'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Mock } from '@type'
 import { S3 } from 'aws-sdk'
@@ -6,22 +6,22 @@ import { S3 } from 'aws-sdk'
 const mockS3 = () => ({})
 
 describe('AwsService', () => {
-  let service: AwsService
+  let service: AwsS3Service
   let s3: Mock<S3>
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AwsService,
+        AwsS3Service,
         {
-          provide: 'AWS-S3',
+          provide: 'S3',
           useValue: mockS3()
         }
       ]
     }).compile()
 
-    service = module.get<AwsService>(AwsService)
-    s3 = module.get('AWS-S3')
+    service = module.get<AwsS3Service>(AwsS3Service)
+    s3 = module.get('S3')
   })
 
   it('should be defined', () => {
