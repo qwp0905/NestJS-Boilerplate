@@ -6,11 +6,11 @@ import { User } from '@models/mysql'
 @Injectable()
 export class MysqlService {
   constructor(
-    @InjectEntityManager('MySQL') private readonly conn: EntityManager
+    @InjectEntityManager('MySQL') private readonly entityManager: EntityManager
   ) {}
 
   async selectOnUser() {
-    const user: User = await this.conn.query(
+    const user: User = await this.entityManager.query(
       `SELECT Users.id,COUNT(
         SELECT id FROM articles
           WHERE articles.user_id = Users.id

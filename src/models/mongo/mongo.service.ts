@@ -4,7 +4,7 @@ import { InjectConnection } from '@nestjs/mongoose'
 import { Diff } from '@type'
 import { deepDiff } from '@utils'
 import { Connection, FilterQuery } from 'mongoose'
-import { IMongoDB } from 'src/common/interfaces/database.interface'
+import { IMongoDB } from '@interfaces'
 
 @Injectable()
 export class MongoService {
@@ -22,7 +22,7 @@ export class MongoService {
       .collection(collection)
       .findOne<K>(filter_query)
     const diff_data = deepDiff.map<K>(previous, current)
-    const diff: Diff<T> = {
+    const diff: Diff<K> = {
       ...diff_data,
       _bef_dt: previous._dt,
       ...signature

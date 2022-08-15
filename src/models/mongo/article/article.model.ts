@@ -7,7 +7,7 @@ import {
   QueryOptions,
   UpdateQuery
 } from 'mongoose'
-import { Article, ArticleDocument } from './article.schema'
+import { Article, ArticleDocument } from '@models/mongo'
 
 @Injectable()
 export class ArticleModel {
