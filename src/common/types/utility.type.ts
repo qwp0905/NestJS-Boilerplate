@@ -6,8 +6,6 @@ export type StringKeys<T> = {
   [P in keyof T]: T[P] extends string ? P : never
 }[keyof T]
 
-export type Key<T> = keyof T extends string ? keyof T : never
-
 export type NotObject =
   | string
   | number
@@ -21,3 +19,8 @@ export type NotObject =
       _bsontype: string
     }
   | any[]
+
+export type Join<
+  T extends string | number,
+  P extends string | number
+> = `${T}.${P}`

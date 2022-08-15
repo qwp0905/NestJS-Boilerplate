@@ -127,6 +127,12 @@ export const UpdateQueryBuilder = <T>(): IUpdateQueryBuilder<T> => {
       return this
     },
     push(key, value) {
+      if (
+        value === undefined ||
+        (typeof value === 'object' && !Object.keys(value).length)
+      ) {
+        return this
+      }
       if (!query.$push) query.$push = {}
       query.$push = { ...query.$push, [key]: value }
       return this
