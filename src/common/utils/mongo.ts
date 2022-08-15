@@ -6,7 +6,7 @@ import {
   UpdateQuery
 } from 'mongoose'
 import {
-  IQueryBuiler,
+  IQueryBuilder,
   IUpdateQueryBuilder,
   IRootQuerySelector,
   IReplaceOneOption,
@@ -15,7 +15,7 @@ import {
 import { Bulk, QueryKey, QueryValue } from '@type'
 import { Article } from '@models/mongo'
 
-export const QueryBuilder = <T>(): IQueryBuiler<T> => {
+export const QueryBuilder = <T>(): IQueryBuilder<T> => {
   let query: FilterQuery<T> = {}
 
   const setKey = <K extends QueryKey<T>>(

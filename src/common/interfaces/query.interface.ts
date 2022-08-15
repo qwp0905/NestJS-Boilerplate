@@ -19,59 +19,59 @@ export interface ISqlQueryResult {
   changedRows: number
 }
 
-export interface IQueryBuiler<T> {
+export interface IQueryBuilder<T> {
   add: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   not: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M> extends string
       ? QueryValue<T, M> | RegExp
       : QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   gt: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   gte: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   lt: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   lte: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
-  exists: <M extends QueryKey<T>>(key: M, value?: boolean) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
+  exists: <M extends QueryKey<T>>(key: M, value?: boolean) => IQueryBuilder<T>
   regex: <M extends QueryKey<T>>(
     key: QueryValue<T, M> extends string ? M : never,
     pattern?: RegExp,
     options?: RegexOptions
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   in: <M extends QueryKey<T>>(
     key: M,
     value?: Array<QueryValue<T, M>>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   ne: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   nin: <M extends QueryKey<T>>(
     key: M,
     value?: Array<QueryValue<T, M>>
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   all: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M> extends Array<infer U> ? U[] : never
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   size: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M> extends any[] ? number : never
-  ) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
   elemMatch: <M extends QueryKey<T>>(
     key: M,
     value?: QueryValue<T, M> extends Array<infer U>
@@ -81,10 +81,10 @@ export interface IQueryBuiler<T> {
           : QuerySelector<U>
         : FilterQuery<U>
       : never
-  ) => IQueryBuiler<T>
-  or: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
-  and: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
-  nor: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
+  ) => IQueryBuilder<T>
+  or: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuilder<T>
+  and: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuilder<T>
+  nor: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuilder<T>
   build: () => FilterQuery<T>
 }
 
@@ -178,4 +178,16 @@ export interface IBulkBuilder<T extends Document> {
   deleteOne: (options: IDeleteOneOption<T>) => IBulkBuilder<T>
   deleteMany: (options: IDeleteManyOption<T>) => IBulkBuilder<T>
   build: () => Bulk<T>[]
+}
+
+export interface IAggregateBuilder<T> {
+  match: (query: FilterQuery<T>) => IAggregateBuilder<T>
+  addFields: <M extends QueryKey<T>, P extends string>(
+    options: P extends M ? never : Record<P, Fields<T>>
+  ) => IAggregateBuilder<T>
+}
+
+interface Fields<T> {
+  $sum?: `$${QueryKey<T>}` | number | Array<`$${QueryKey<T>}` | number>
+  $add?: `$${QueryKey<T>}`[]
 }
