@@ -29,7 +29,7 @@ export type Bulk<T> =
     }
 
 export type QueryKey<T> =
-  | keyof T
+  | { [P in keyof T]: P extends symbol ? never : P }[keyof T]
   | {
       [P in keyof T]: T[P] extends NotObject
         ? never

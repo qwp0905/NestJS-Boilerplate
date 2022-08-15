@@ -22,6 +22,7 @@ export class ArticleModel {
     options: QueryOptions<ArticleDocument> = {}
   ) {
     const target = await this.model.find(query, projection, options)
+    this.model.aggregate()
     return target
   }
 
