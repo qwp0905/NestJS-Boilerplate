@@ -12,14 +12,15 @@ import {
   IReplaceOneOption,
   IBulkBuilder
 } from '@interfaces'
-import { Bulk, MongoKey, MongoValue } from '@type'
+import { Bulk, QueryKey, QueryValue } from '@type'
+import { Article } from '@models/mongo'
 
 export const QueryBuilder = <T>(): IQueryBuiler<T> => {
   let query: FilterQuery<T> = {}
 
-  const setKey = <K extends MongoKey<T>>(
+  const setKey = <K extends QueryKey<T>>(
     key: K,
-    tag: keyof QuerySelector<MongoValue<T, K>>,
+    tag: keyof QuerySelector<QueryValue<T, K>>,
     value: any
   ) => {
     if (value === undefined) return
@@ -89,6 +90,18 @@ export const QueryBuilder = <T>(): IQueryBuiler<T> => {
       setKey(key, '$nin', value)
       return this
     },
+    all(key, value) {
+      setKey(key, '$all', value)
+      return this
+    },
+    size(key, value) {
+      setKey(key, '$size', value)
+      return this
+    },
+    elemMatch(key, value) {
+      setKey(key, '$elemMatch', value)
+      return this
+    },
     or(conditions) {
       setCondition('$or', conditions)
       return this
@@ -137,6 +150,22 @@ export const UpdateQueryBuilder = <T>(): IUpdateQueryBuilder<T> => {
       query.$push = { ...query.$push, [key]: value }
       return this
     },
+    pop(key, value) {
+      if (!value) {
+        return this
+      }
+      if (!query.$pop) query.$pop = {}
+      query.$pop = { ...query.$pop, [key]: value }
+      return this
+    },
+    pull(key, value) {
+      if (!value || (typeof value === 'object' && !Object.keys(value).length)) {
+        return this
+      }
+      if (!query.$pull) query.$pull = {}
+      query.$pull = { ...query.$pull, [key]: value }
+      return this
+    },
     build() {
       return query
     }
@@ -175,3 +204,5 @@ export const BulkBuilder = <T extends Document>(): IBulkBuilder<T> => {
     }
   }
 }
+
+UpdateQueryBuilder<Article>()

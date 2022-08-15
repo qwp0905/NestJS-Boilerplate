@@ -1,5 +1,11 @@
-import { Bulk, MongoKey, MongoValue } from '@type'
-import { Document, FilterQuery, RegexOptions, UpdateQuery } from 'mongoose'
+import { Bulk, QueryKey, QueryValue, NotObject } from '@type'
+import {
+  Document,
+  FilterQuery,
+  QuerySelector,
+  RegexOptions,
+  UpdateQuery
+} from 'mongoose'
 import { CollationDocument } from 'typeorm'
 
 export interface ISqlQueryResult {
@@ -14,49 +20,67 @@ export interface ISqlQueryResult {
 }
 
 export interface IQueryBuiler<T> {
-  add: <M extends MongoKey<T>>(
+  add: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  not: <M extends MongoKey<T>>(
+  not: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M> extends string
-      ? MongoValue<T, M> | RegExp
-      : MongoValue<T, M>
+    value?: QueryValue<T, M> extends string
+      ? QueryValue<T, M> | RegExp
+      : QueryValue<T, M>
   ) => IQueryBuiler<T>
-  gt: <M extends MongoKey<T>>(
+  gt: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  gte: <M extends MongoKey<T>>(
+  gte: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  lt: <M extends MongoKey<T>>(
+  lt: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  lte: <M extends MongoKey<T>>(
+  lte: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  exists: <M extends MongoKey<T>>(key: M, value?: boolean) => IQueryBuiler<T>
-  regex: <M extends MongoKey<T>>(
-    key: MongoValue<T, M> extends string ? M : never,
+  exists: <M extends QueryKey<T>>(key: M, value?: boolean) => IQueryBuiler<T>
+  regex: <M extends QueryKey<T>>(
+    key: QueryValue<T, M> extends string ? M : never,
     pattern?: RegExp,
     options?: RegexOptions
   ) => IQueryBuiler<T>
-  in: <M extends MongoKey<T>>(
+  in: <M extends QueryKey<T>>(
     key: M,
-    value?: Array<MongoValue<T, M>>
+    value?: Array<QueryValue<T, M>>
   ) => IQueryBuiler<T>
-  ne: <M extends MongoKey<T>>(
+  ne: <M extends QueryKey<T>>(
     key: M,
-    value?: MongoValue<T, M>
+    value?: QueryValue<T, M>
   ) => IQueryBuiler<T>
-  nin: <M extends MongoKey<T>>(
+  nin: <M extends QueryKey<T>>(
     key: M,
-    value?: Array<MongoValue<T, M>>
+    value?: Array<QueryValue<T, M>>
+  ) => IQueryBuiler<T>
+  all: <M extends QueryKey<T>>(
+    key: M,
+    value?: QueryValue<T, M> extends Array<infer U> ? U[] : never
+  ) => IQueryBuiler<T>
+  size: <M extends QueryKey<T>>(
+    key: M,
+    value?: QueryValue<T, M> extends any[] ? number : never
+  ) => IQueryBuiler<T>
+  elemMatch: <M extends QueryKey<T>>(
+    key: M,
+    value?: QueryValue<T, M> extends Array<infer U>
+      ? U extends NotObject
+        ? U extends Array<infer K>
+          ? { $size?: number; $all?: K[]; $elemMatch?: any }
+          : QuerySelector<U>
+        : FilterQuery<U>
+      : never
   ) => IQueryBuiler<T>
   or: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
   and: (conditions?: FilterQuery<T> | Array<FilterQuery<T>>) => IQueryBuiler<T>
@@ -65,16 +89,24 @@ export interface IQueryBuiler<T> {
 }
 
 export interface IUpdateQueryBuilder<T> {
-  set: <M extends MongoKey<Omit<T, '_id'>>>(
+  set: <M extends QueryKey<Omit<T, '_id'>>>(
     key: M,
-    value?: MongoValue<Omit<T, '_id'>, M>
+    value?: QueryValue<Omit<T, '_id'>, M>
   ) => IUpdateQueryBuilder<T>
-  unset: <M extends MongoKey<Omit<T, '_id'>>>(key: M) => IUpdateQueryBuilder<T>
-  push: <M extends MongoKey<Omit<T, '_id'>>>(
+  unset: <M extends QueryKey<Omit<T, '_id'>>>(key: M) => IUpdateQueryBuilder<T>
+  push: <M extends QueryKey<Omit<T, '_id'>>>(
     key: M,
-    value?: MongoValue<Omit<T, '_id'>, M> extends Array<infer U>
+    value?: QueryValue<Omit<T, '_id'>, M> extends Array<infer U>
       ? U | IPushQuery<U>
       : never
+  ) => IUpdateQueryBuilder<T>
+  pop: <M extends QueryKey<Omit<T, '_id'>>>(
+    key: M,
+    value?: QueryValue<Omit<T, '_id'>, M> extends any[] ? 1 | -1 : never
+  ) => IUpdateQueryBuilder<T>
+  pull: <M extends QueryKey<T>>(
+    key: M,
+    value: FilterQuery<M>
   ) => IUpdateQueryBuilder<T>
   build: () => UpdateQuery<T>
 }
@@ -88,6 +120,12 @@ export interface IRootQuerySelector<T> {
 export interface IPushQuery<T> {
   $slice?: number
   $each: Array<T>
+  $sort?: T extends string | number
+    ? 1 | -1
+    : T extends any[]
+    ? never
+    : { [P in QueryKey<T>]?: 1 | -1 }
+  $position?: number
 }
 
 export interface IInsertOneOption<T> {

@@ -28,7 +28,7 @@ export type Bulk<T> =
       deleteMany: IDeleteManyOption<T>
     }
 
-export type MongoKey<T> =
+export type QueryKey<T> =
   | keyof T
   | {
       [P in keyof T]: T[P] extends NotObject
@@ -56,7 +56,7 @@ export type MongoKey<T> =
           >
     }[keyof T]
 
-export type MongoValue<T, K extends MongoKey<T>> = K extends keyof T
+export type QueryValue<T, K extends QueryKey<T>> = K extends keyof T
   ? T[K]
   : K extends `${infer K1}.${infer K2}`
   ? K1 extends keyof T
