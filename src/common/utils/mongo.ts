@@ -12,14 +12,14 @@ import {
   IReplaceOneOption,
   IBulkBuilder
 } from '@interfaces'
-import { Bulk } from '@type'
+import { Bulk, MongoKey, MongoValue } from '@type'
 
 export const QueryBuilder = <T>(): IQueryBuiler<T> => {
-  const query: FilterQuery<T> = {}
+  let query: FilterQuery<T> = {}
 
-  const setKey = <K extends keyof T>(
+  const setKey = <K extends MongoKey<T>>(
     key: K,
-    tag: keyof QuerySelector<T[K]>,
+    tag: keyof QuerySelector<MongoValue<T, K>>,
     value: any
   ) => {
     if (value === undefined) return
@@ -45,7 +45,7 @@ export const QueryBuilder = <T>(): IQueryBuiler<T> => {
     add(key, value) {
       if (value === undefined) return this
       if (Array.isArray(value) && !value.length) return this
-      query[key] = value
+      query = { ...query, [key]: value }
       return this
     },
     not(key, value) {
@@ -118,7 +118,7 @@ export const UpdateQueryBuilder = <T>(): IUpdateQueryBuilder<T> => {
         return this
       }
       if (!query.$set) query.$set = {}
-      query.$set[key] = value
+      query.$set = { ...query.$set, [key]: value }
       return this
     },
     unset(key) {

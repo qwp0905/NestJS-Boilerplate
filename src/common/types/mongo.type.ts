@@ -6,7 +6,7 @@ import {
   IUpdateManyOption,
   IUpdateOneOption
 } from '@interfaces'
-import { Document, Model } from 'mongoose'
+import { Document } from 'mongoose'
 import { Key, NotObject } from '@type'
 
 export type Bulk<T extends Document> =
@@ -30,7 +30,7 @@ export type Bulk<T extends Document> =
     }
 
 export type MongoKey<T> =
-  | Key<T>
+  | keyof T
   | {
       [P in keyof T]: T[P] extends NotObject
         ? never
@@ -51,7 +51,7 @@ export type MongoKey<T> =
 
 export type Join<T extends string, P extends string> = `${T}.${P}`
 
-export type MongoValue<T, K extends MongoKey<T>> = K extends Key<T>
+export type MongoValue<T, K extends MongoKey<T>> = K extends keyof T
   ? T[K]
   : K extends `${infer K1}.${infer K2}`
   ? K1 extends keyof T
