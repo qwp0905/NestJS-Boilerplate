@@ -49,6 +49,7 @@
     "helmet": "^5.1.0",
     "ioredis": "^5.2.0",
     "mongoose": "^6.4.4",
+    "mongoose-querybuilder": "^1.0.6",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.6.0",
@@ -126,12 +127,13 @@
       "^@pipes$": "<rootDir>/common/pipes/index",
       "^@type$": "<rootDir>/common/types/index",
       "^@config$": "<rootDir>/config/configuration",
-      "^@database$": "<rootDir>/database/database.module",
+      "^@database$": "<rootDir>/external/database/database.module",
       "^@models/(.*)$": "<rootDir>/models/$1/index",
       "^@rabbitmq$": "<rootDir>/external/rabbitmq/rabbitmq.module",
       "^@redis$": "<rootDir>/external/redis/redis.module",
       "^@slack$": "<rootDir>/external/slack/slack.module",
-      "^@evnet$": "<rootDir>/common/event/event.module"
+      "^@evnet$": "<rootDir>/event/event.module",
+      "^@services$": "<rootDir>/services/index"
     }
   },
   "lint-staged": {
