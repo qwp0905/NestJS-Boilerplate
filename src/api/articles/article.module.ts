@@ -1,12 +1,11 @@
 export * from './article.controller'
-export * from './article.service'
 
 import { Module } from '@nestjs/common'
-import { ArticleController, ArticleService } from '@api'
+import { ArticleController } from '@api'
+import { ArticleServiceModule } from '@services'
 
 @Module({
-  imports: [],
-  controllers: [ArticleController],
-  providers: [ArticleService]
+  imports: [ArticleServiceModule],
+  controllers: [ArticleController]
 })
 export class ArticleModule {}
