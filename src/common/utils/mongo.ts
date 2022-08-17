@@ -13,7 +13,6 @@ import {
   IBulkBuilder
 } from '@interfaces'
 import { Bulk, QueryKey, QueryValue } from '@type'
-import { Article } from '@models/mongo'
 
 export const QueryBuilder = <T>(): IQueryBuilder<T> => {
   let query: FilterQuery<T> = {}
@@ -204,5 +203,3 @@ export const BulkBuilder = <T extends Document>(): IBulkBuilder<T> => {
     }
   }
 }
-
-UpdateQueryBuilder<Article>()

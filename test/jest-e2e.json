@@ -22,11 +22,12 @@
     "^@pipes$": "<rootDir>/../src/common/pipes/index",
     "^@type$": "<rootDir>/../src/common/types/index",
     "^@config$": "<rootDir>/../src/config/configuration",
-    "^@database$": "<rootDir>/../src/database/database.module",
+    "^@database$": "<rootDir>/../src/external/database/database.module",
     "^@models/(.*)$": "<rootDir>/../src/models/$1/index",
     "^@rabbitmq$": "<rootDir>/../src/external/rabbitmq/rabbitmq.module",
     "^@redis$": "<rootDir>/../src/external/redis/redis.module",
     "^@slack$": "<rootDir>/../src/external/slack/slack.module",
-    "^@event$": "<rootDir>/../src/common/event/event.module"
+    "^@event$": "<rootDir>/../src/event/event.module",
+    "^@services$": "<rootDir>/../src/services/index"
   }
 }

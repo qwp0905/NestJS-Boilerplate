@@ -1,7 +1,6 @@
-export * from './articles/article.service'
 export * from './articles/article.controller'
 export * from './articles/article.module'
-export * from './users/users.service'
+
 export * from './users/users.controller'
 export * from './users/users.module'
 
