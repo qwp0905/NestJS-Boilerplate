@@ -49,7 +49,7 @@
     "helmet": "^5.1.0",
     "ioredis": "^5.2.0",
     "mongoose": "^6.4.4",
-    "mongoose-querybuilder": "^1.0.6",
+    "mongoose-querybuilder": "^1.1.11",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.6.0",
