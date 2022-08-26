@@ -1,6 +1,7 @@
 import {
   Document,
   FilterQuery,
+  HydratedDocument,
   Model,
   ProjectionType,
   QueryOptions,
@@ -24,8 +25,8 @@ export class BaseModel<TDocument extends Document> {
     query: FilterQuery<TDocument> = {},
     projection: ProjectionType<TDocument> = {},
     options: QueryOptions<TDocument> = {}
-  ): Observable<TDocument[]> {
-    const result = this.model.find(query, projection, options).exec()
+  ): Observable<HydratedDocument<TDocument>> {
+    const result = this.model.find(query, projection, options).cursor()
 
     return from(result)
   }
