@@ -6,14 +6,16 @@ export type Diff<T> = {
   _bef_dt: string
 } & ISignature
 
-export type DiffData<T> =
-  | { [P in DiffType]?: T }
-  | { [P in keyof T]?: DiffData<T[P]> }
+export type DiffData<T> = T extends (infer U)[]
+  ? DiffData<U>[]
+  : DiffType<T> | { [P in keyof T]?: DiffData<T[P]> }
 
-export enum DiffType {
-  created = 'created',
-  updated_from = 'updated_from',
-  updated_to = 'updated_to',
-  deleted = 'deleted',
-  unchanged = 'unchanged'
+export type DiffType<T> =
+  | { created: T }
+  | { updated_from: T; updated_to: T }
+  | { deleted: T }
+  | { unchanged: T }
+
+export type DiffRule<T> = {
+  [P in keyof T]?: (a: T[P], b: T[P]) => DiffData<T[P]>
 }
