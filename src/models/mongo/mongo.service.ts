@@ -22,11 +22,11 @@ export class MongoService {
       .collection(collection)
       .findOne<K>(filter_query)
     const diff_data = deepDiff.map<K>(previous, current)
-    const diff: Diff<K> = {
+    const diff = {
       ...diff_data,
       _bef_dt: previous._dt,
       ...signature
-    }
+    } as unknown as Diff<K>
     const update_query = {
       _diff: {
         $push: {

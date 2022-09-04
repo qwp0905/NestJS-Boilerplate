@@ -1,10 +1,10 @@
 import { DiffData, DiffType } from '@type'
 
 export const deepDiff = {
-  VALUE_CREATED: DiffType.created,
-  VALUE_UPDATED: DiffType.updated_from,
-  VALUE_DELETED: DiffType.deleted,
-  VALUE_UNCHANGED: DiffType.unchanged,
+  VALUE_CREATED: 'created',
+  VALUE_UPDATED: 'updated_from',
+  VALUE_DELETED: 'deleted',
+  VALUE_UNCHANGED: 'unchanged',
   map: function <T>(
     obj1: T,
     obj2: T,
@@ -31,13 +31,13 @@ export const deepDiff = {
       if (comp === this.VALUE_UNCHANGED) {
         return null
       } else if (comp === this.VALUE_UPDATED) {
-        return { updated_from: obj1, updated_to: obj2 }
+        return { updated_from: obj1, updated_to: obj2 } as DiffData<T>
       } else {
-        return { [comp]: obj1 === undefined ? obj2 : obj1 }
+        return { [comp]: obj1 === undefined ? obj2 : obj1 } as DiffData<T>
       }
     }
 
-    const diff: DiffData<T> = {}
+    const diff = {} as DiffData<T>
     Object.keys(obj1)
       .filter(
         (k) =>
@@ -87,7 +87,7 @@ export const deepDiff = {
 
     return diff
   },
-  compareValues: function (value1: any, value2: any): DiffType {
+  compareValues: function (value1: any, value2: any) {
     if (value1 === value2) {
       return this.VALUE_UNCHANGED
     }
