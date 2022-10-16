@@ -1,0 +1,11 @@
+dist
+.vscode
+.husky
+node_modules
+test
+.eslintrc.js
+.gitignore
+.gitignore
+.prettierrc
+Dockerfile*
+*.yml

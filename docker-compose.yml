@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+  nest:
+    depends_on:
+      - nest_mongo
+      - nest_redis
+      - nest_mysql
+      - nest_rabbitmq
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: nest-server
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=nest_redis
+      - MONGO_URI=mongodb://root:test@nest_mongo:27017/
+      - DATABASE_HOST=nest_mysql
+      - DATABASE_PASSWORD=test
+      - DATABASE_NAME=nest
+      - RABBITMQ_URL=http://localhost:15672/
+    container_name: nest
+
+  nest_redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./.database/nest_redis:/data
+
+  nest_mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./.database/nest_mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=test
+
+  nest_mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.database/nest_mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=nest
+      - MYSQL_ROOT_PASSWORD=test
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    cap_add:
+      - SYS_NICE
+
+  nest_rabbitmq:
+    image: rabbitmq:alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: test

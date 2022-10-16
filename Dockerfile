@@ -1,14 +1,15 @@
 FROM node:lts
 
+COPY . /origin
+
+WORKDIR /origin
+
+RUN npm ci && \
+    npm run build && \
+    cp -r dist /app && \
+    cp -r node_modules /app/node_modules && \
+    rm -rf /origin
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-
-RUN npm ci
-
-RUN npm run build
-
-COPY dist .
-
-RUN npm run start
-
+CMD node main.js
